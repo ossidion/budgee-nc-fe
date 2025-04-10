@@ -19,8 +19,7 @@ import PieChart from './PieChart.vue';
     align-items: center;
     flex-direction: column;
 
-    border: solid white;
-
+    
 }
 
 </style>

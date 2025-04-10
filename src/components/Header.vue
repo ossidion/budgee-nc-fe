@@ -5,7 +5,11 @@
 </script>
 
 <template>
+
 <header>Budgee</header>
+
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
