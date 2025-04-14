@@ -1,5 +1,6 @@
 <script setup>
 import PieChart from './PieChart.vue';
+import { defineStore } from 'pinia'
 
 
 
