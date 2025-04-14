@@ -27,10 +27,12 @@ const chartData = ref({labels: ['Clothing', 'Groceries', 'Books', 'Eating Out'],
 </script>
 
 <template>
+
 <div id="pieChartDiv">
 <PieChartComponent :chartData="chartData"/>
 <button @click="incrementCount">+100 to books</button>
 </div>
+
 </template>
 
 <style scoped>
