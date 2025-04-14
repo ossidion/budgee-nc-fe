@@ -2,11 +2,20 @@
 import PieChart from './PieChart.vue';
 import { defineStore } from 'pinia'
 import { generateStore } from './assets/stores/currentBudgetData';
+import { generateCategoryData, generateExpenseData } from '@/utils/testData';
 
-const budgetData = generateStore()()
-console.log(budgetData.count, "budgetData.count")
-budgetData.increment()
-console.log(budgetData.count,  "budgetData.count")
+let categoryData = []
+let budgetData = undefined
+generateCategoryData(5)
+.then((res)=> {
+    categoryData = res
+    return generateExpenseData(categoryData, 500)
+})
+.then((expensesData)=>{
+    budgetData = generateStore({categoryData, expensesData})()
+})
+
+
 
 </script>
 

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 
 export const generateStore = (data) => {
-
+  console.log(data, "data")
   return defineStore('budgetData', {
     state: () => {
       return { count: 0 }
