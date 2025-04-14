@@ -1,7 +1,7 @@
 <script setup>
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
-import * as chartConfig from './assets/chartConfig.js'
+
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -19,7 +19,7 @@ const options = {
     }
   }
 
-  
+
 const props = defineProps({
 chartData: {
   type: Object,
