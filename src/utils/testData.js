@@ -27,7 +27,7 @@ export function generateCategoryData (no_categories){
     const categoryData = []
     for (let i = 0; i < no_categories; i++){
         categoryData.push( {
-            id : i, 
+            category_id : i, 
             name : identName(i),
             colour_id : Math.round(Math.random()*1000),
             description : identName(i*1000)
@@ -44,7 +44,8 @@ export function generateExpenseData(categoryData,no_expenses){
 
     for (let i = 0; i < no_expenses; i++){
         expenseData.push({
-            budget_id : i,
+            expense_id : i,
+            budget_id : 1,
             category_id : cat_ids[Math.floor(Math.random() * cat_ids.length)], 
             amount : Math.round((Math.random()*10000))/100,
             description : identName(i*10001)
