@@ -23,7 +23,7 @@ var identName = function (a) {
 
 
 
-function generateCategoryData (no_categories){
+export function generateCategoryData (no_categories){
     const categoryData = []
     for (let i = 0; i < no_categories; i++){
         categoryData.push( {
@@ -33,7 +33,7 @@ function generateCategoryData (no_categories){
             description : identName(i*1000)
            })
     }
-    return categoryData
+    return Promise.resolve(categoryData)
 }
 
 
@@ -50,6 +50,6 @@ export function generateExpenseData(categoryData,no_expenses){
             description : identName(i*10001)
            })
     }
-    return expenseData
+    return Promise.resolve(expenseData)
 }
 
