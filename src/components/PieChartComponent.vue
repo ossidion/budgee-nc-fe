@@ -10,7 +10,8 @@ const options = {
     responsive: true,
     maintainAspectRatio: false,
     onClick: function (event,elements) {
-        console.log(router.currentRoute._rawValue.fullPath)
+        const currPath = router.currentRoute._rawValue.fullPath;
+
         router.push(`/expenses/${elements[0].index}`)
        //console.log(elements[0].index)
         console.log(this)
@@ -18,6 +19,7 @@ const options = {
     }
   }
 
+  
 const props = defineProps({
 chartData: {
   type: Object,
