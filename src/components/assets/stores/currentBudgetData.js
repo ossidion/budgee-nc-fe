@@ -1,18 +1,5 @@
 import { defineStore } from "pinia";
 
-export const setCategories = () => {
-  const category_ids = categoryData.map((cat) => cat.category_id);
-  categoryData.forEach((cat) => (cat.expenses = []));
-
-  for (let expense of expensesData) {
-    const index = category_ids.indexOf(expense.category_id);
-    if (index === -1) {
-      return Promise.reject();
-    }
-    categoryData[index].expenses.push(expense);
-  }
-};
-
 export const useStore = defineStore("budgetData", {
   state: () => {
     return { categories: [] };
@@ -21,8 +8,28 @@ export const useStore = defineStore("budgetData", {
   //  state: () => ({ count: 0 })
 
   actions: {
-    addExpense() {
-      console.log("placeholder");
+    addExpense(amount, categoryId, budgetId = 1, date=new Date(), description = "", expenseId = 0) {
+      
+      const category = this.categories.find((cat => 
+        cat.category_id === categoryId
+      ))
+
+      if (!category) return false
+
+      const newExpense = {
+        amount,
+        budget_id: budgetId,
+        category_id: categoryId,
+        date,
+        description,
+        expense_id: expenseId,
+      }
+
+      category.expenses.push(newExpense)
+
+      return true
+      
+      // console.log(newExpense);
     },
   },
   getters: {

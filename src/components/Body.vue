@@ -6,13 +6,14 @@ import { generateCategoryData, generateExpenseData } from '@/utils/testData';
 
 let categoryData = []
 let budgetStore = useStore()
+console.log(Object.keys(budgetStore), "here")
 
 
 
 generateCategoryData(5)
     .then((res) => {
         categoryData = res
-        return generateExpenseData(categoryData, 500)
+        return generateExpenseData(categoryData, 10)
     })
     .then((expensesData) => {
         const category_ids = categoryData.map((cat) => cat.category_id)
@@ -29,6 +30,7 @@ generateCategoryData(5)
         console.log(expensesData[0])
     })
     .then(() => {
+
 
     })
     .catch((err) => {
