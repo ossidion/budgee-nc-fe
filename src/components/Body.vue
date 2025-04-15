@@ -26,11 +26,10 @@ generateCategoryData(5)
             categoryData[index].expenses.push(expense)
         }
         budgetStore.$patch({categories:categoryData})
-        console.log(expensesData)
+        console.log(expensesData[0])
     })
     .then(() => {
 
-        console.log(budgetStore.getCategories)
     })
     .catch((err) => {
         console.log(err)

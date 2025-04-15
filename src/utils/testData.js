@@ -21,7 +21,15 @@ var identName = function (a) {
     return out;
 }
 
-
+export function generateCurrentBudget(){
+        return Promise.resolve({
+            budget_id : 1,
+            budget : 5000+Math.round(Math.random()*100),
+            interval : {start_date : new Date(new Date()-1.21e+9*2),
+            end_date : new Date(new Date()+1.21e+9*2)
+        }
+    })
+}
 
 export function generateCategoryData (no_categories){
     const categoryData = []
@@ -55,8 +63,4 @@ export function generateExpenseData(categoryData,no_expenses){
     return Promise.resolve(expenseData)
 }
 
-generateCategoryData(5).then((res)=>{
-
-    const expense_data = generateExpenseData(res,100)
-    console.log(expense_data)
-})
+generateCurrentBudget().then((res)=> console.log(res))
