@@ -2,15 +2,17 @@
 import PieChart from './PieChart.vue';
 
 import { useStore } from './assets/stores/currentBudgetData';
-import { generateCategoryData, generateExpenseData } from '@/utils/testData';
+import { generateCategoryData, generateCurrentBudget, generateExpenseData } from '@/utils/testData';
 
 let categoryData = []
 let budgetStore = useStore()
 console.log(Object.keys(budgetStore), "here")
 
 
-
-generateCategoryData(5)
+generateCurrentBudget().then((budgetData) => {
+    budgetStore.$patch({budget:budgetData})
+    return generateCategoryData(5)
+})
     .then((res) => {
         categoryData = res
         return generateExpenseData(categoryData, 10)

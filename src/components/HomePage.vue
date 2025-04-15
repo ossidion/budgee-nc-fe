@@ -4,11 +4,18 @@
     import Nav from './Nav.vue'
     import 'tailwindcss';
     import { useStore } from './assets/stores/currentBudgetData';
+    import { computed } from 'vue';
+    
 
     let budgetStore = useStore()
 
+    console.log(budgetStore.budget, "budgetStore.budget")
+
+
     const availableFunds = ref(954)
-    const budget = ref(2454)
+    const budget = computed(() => {
+        return budgetStore.budget.budget
+    })
     const changeBudgetForm = ref(false)
     const newTotalBudget = ref("")
     const newAvailableFunds = ref("")
@@ -26,7 +33,10 @@
     }
 
     const updateTotalBudget = (newTotalBudget) => {
-        budget.value = newTotalBudget
+
+        budgetStore.changeBudget(Number(newTotalBudget))
+        console.log(budgetStore.budget, "HERE")
+
     }
 
     const updateAvailableFunds = (newAvailableFunds) => {
