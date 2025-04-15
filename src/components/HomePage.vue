@@ -9,10 +9,7 @@
 
     let budgetStore = useStore()
 
-    console.log(budgetStore.getSpendingLeft, "budgetStore.getSpendingLeft")
-
-
-    const availableFunds = ref(954)
+    const availableFunds = budgetStore.getSpendingLeft
     const budget = computed(() => {
         return budgetStore.budget.budget
     })
@@ -35,7 +32,6 @@
     const updateTotalBudget = (newTotalBudget) => {
 
         budgetStore.changeBudget(Number(newTotalBudget))
-        // console.log(budgetStore.budget, "HERE")
 
     }
 
@@ -67,7 +63,7 @@
 <template>
     <br><br>
 
-    <p>£{{ budgetStore.getSpendingLeft }} left of £{{ budget }}</p>
+    <p>£{{ availableFunds }} left of £{{ budget }}</p>
 
     <section>
 
