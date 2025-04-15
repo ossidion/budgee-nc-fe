@@ -2,10 +2,11 @@ import { defineStore } from "pinia";
 
 export const useStore = defineStore("budgetData", {
   state: () => {
-    return { categories: [], budget: {budget_id: 1, budget: 0, interval: {start_date: new Date(), end_date: new Date()}} };
+    return { categories: [], budget: {budget_id: 1, budget: 0, interval: {start_date: new Date(), end_date: new Date()}}, spendingLeft: 953 };
   },
   // could also be defined as
   //  state: () => ({ count: 0 })
+
 
   actions: {
     addExpense(amount, categoryId, budgetId = 1, date=new Date(), description = "", expenseId = 0) {
@@ -32,7 +33,7 @@ export const useStore = defineStore("budgetData", {
       // console.log(newExpense);
     },
     changeBudget(newTotalBudget) {
-      
+
       this.budget.budget = newTotalBudget
 
     }
@@ -95,6 +96,9 @@ export const useStore = defineStore("budgetData", {
           }
         ]
       }
+    },
+    getSpendingLeft: (state) => {
+      return state.spendingLeft
     }
   },
 });
