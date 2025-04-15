@@ -1,13 +1,24 @@
 <script setup>
 import { ref, computed } from 'vue'
 import CategoryList from './CategoryList.vue'
+import { useStore } from './assets/stores/currentBudgetData'
 
-const categories = ref([
-  { name: 'Food', amount: 150, percentage: 30 },
-  { name: 'Transport', amount: 75, percentage: 15 },
-  { name: 'Clothes', amount: 200, percentage: 45 },
-  { name: 'Leisure', amount: 50, percentage: 10 },
-])
+let budgetStore = useStore()
+
+console.log(budgetStore.getCategories,"<<expenses")
+
+
+console.log(budgetStore.getCatNames,"<<")
+console.log(budgetStore.getCatAmounts,"<<")
+// const categories = ref([
+//   { name: 'Food', amount: 150, percentage: 30 },
+//   { name: 'Transport', amount: 75, percentage: 15 },
+//   { name: 'Clothes', amount: 200, percentage: 45 },
+//   { name: 'Leisure', amount: 50, percentage: 10 },
+// ])
+
+
+const categories = budgetStore.getCategories
 
 const selectedCurrency = ref('GBP')
 const newCategoryName = ref('')

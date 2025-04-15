@@ -39,7 +39,7 @@ export function generateCategoryData (no_categories){
 
 export function generateExpenseData(categoryData,no_expenses){
     const expenseData = []
-    const cat_ids = categoryData.map((cat)=>cat.id)
+    const cat_ids = categoryData.map((cat)=>cat.category_id)
 
 
     for (let i = 0; i < no_expenses; i++){
