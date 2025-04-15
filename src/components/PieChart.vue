@@ -7,6 +7,7 @@ import { useStore } from './assets/stores/currentBudgetData';
 let budgetStore = useStore()
 
 
+budgetStore.addExpense()
 
 const categoryData = budgetStore.getCategories
 
@@ -21,7 +22,7 @@ function incrementCount() {
 
   chartData.value = newChartData
 
-  console.log(chartData.value.datasets[0].data[0])
+  
 
 }
 </script>

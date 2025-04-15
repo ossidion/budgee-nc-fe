@@ -48,9 +48,15 @@ export function generateExpenseData(categoryData,no_expenses){
             budget_id : 1,
             category_id : cat_ids[Math.floor(Math.random() * cat_ids.length)], 
             amount : Math.round((Math.random()*10000))/100,
-            description : identName(i*10001)
+            description : identName(i*10001),
+            date: new Date(new Date() - Math.random()*100000000000)
            })
     }
     return Promise.resolve(expenseData)
 }
 
+generateCategoryData(5).then((res)=>{
+
+    const expense_data = generateExpenseData(res,100)
+    console.log(expense_data)
+})
