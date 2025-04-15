@@ -3,15 +3,24 @@
     import { ref } from 'vue'
     import Nav from './Nav.vue'
     import 'tailwindcss';
+    import { useStore } from './assets/stores/currentBudgetData';
+    import { computed } from 'vue';
+    
+
+    let budgetStore = useStore()
+
+    console.log(budgetStore.budget, "budgetStore.budget")
 
 
     const availableFunds = ref(954)
-    const budget = ref(2454)
+    const budget = computed(() => {
+        return budgetStore.budget.budget
+    })
     const changeBudgetForm = ref(false)
     const newTotalBudget = ref("")
     const newAvailableFunds = ref("")
     const addExpenseForm = ref(false)
-    const existingCategories = ["clothes", "transport", "food", "leisure"]
+    const existingCategories = budgetStore.getCatNames
     const expenseCategory = ref("")
     const expenseAmount = ref("")
     const newExpenseCategory = ref("")
@@ -24,7 +33,10 @@
     }
 
     const updateTotalBudget = (newTotalBudget) => {
-        budget.value = newTotalBudget
+
+        budgetStore.changeBudget(Number(newTotalBudget))
+        console.log(budgetStore.budget, "HERE")
+
     }
 
     const updateAvailableFunds = (newAvailableFunds) => {
@@ -40,6 +52,9 @@
         if (newExpenseCategory) {
             expenseCategory.value = newExpenseCategory
             addExpenseMessage.value = `£${expenseAmount.value} successfully added to ${expenseCategory.value.item}!`
+
+            budgetStore.addExpense(expenseAmount.value, 0)
+
         } else {
             expenseCategory.value = newExpenseCategoryWithNewCategory
             addExpenseMessage.value = `£${expenseAmount.value} successfully added to ${newExpenseCategoryWithNewCategory}!`
