@@ -98,11 +98,7 @@ export const useStore = defineStore("budgetData", {
       }
     },
     getSpendingLeft () {
-      let catTotal = 0
-      this.getCatAmounts.map((cat) => {
-        catTotal += cat
-      })
-      return this.budget.budget - catTotal
+      return this.budget.budget - this.getCatAmounts.reduce((acc,curr)=>acc + curr,0)
     }
   },
 });

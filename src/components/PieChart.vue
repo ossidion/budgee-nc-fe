@@ -12,26 +12,17 @@ budgetStore.addExpense()
 const categoryData = budgetStore.getCategories
 
 
-
-
-
-function incrementCount() {
-  const newChartData = structuredClone(toRaw(chartData.value))
-
-  newChartData.datasets[0].data[0] += 100
-
-  chartData.value = newChartData
-
-  
-
+function printLeft (){
+  console.log(budgetStore.getSpendingLeft)
 }
+
 </script>
 
 <template>
 
   <div id="pieChartDiv">
     <PieChartComponent :chartData="budgetStore.getCatPieData" />
-    <button @click="incrementCount">+100 to books</button>
+    <button @click="printLeft">printLeft</button>
   </div>
 
 </template>
