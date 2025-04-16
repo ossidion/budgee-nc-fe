@@ -6,30 +6,31 @@ import { generateCategoryData, generateCurrentBudget, generateExpenseData } from
 
 let categoryData = []
 let budgetStore = useStore()
-console.log(Object.keys(budgetStore), "here")
+// console.log(Object.keys(budgetStore), "here")
 
 
 generateCurrentBudget().then((budgetData) => {
     budgetStore.$patch({budget:budgetData})
     return generateCategoryData(5)
 })
-    .then((res) => {
-        categoryData = res
-        return generateExpenseData(categoryData, 10)
-    })
-    .then((expensesData) => {
-        const category_ids = categoryData.map((cat) => cat.category_id)
-        categoryData.forEach((cat) => cat.expenses = [])
-
-        for (let expense of expensesData) {
-            const index = category_ids.indexOf(expense.category_id)
-            if (index === -1) {
-                return Promise.reject()
-            }
-            categoryData[index].expenses.push(expense)
+.then((res) => {
+    categoryData = res
+    return generateExpenseData(categoryData, 10)
+})
+.then((expensesData) => {
+    const category_ids = categoryData.map((cat) => cat.category_id)
+    categoryData.forEach((cat) => cat.expenses = [])
+    
+    for (let expense of expensesData) {
+        const index = category_ids.indexOf(expense.category_id)
+        if (index === -1) {
+            return Promise.reject()
         }
-        budgetStore.$patch({categories:categoryData})
-        console.log(expensesData[0])
+        categoryData[index].expenses.push(expense)
+    }
+    budgetStore.$patch({categories:categoryData})
+    // console.log(expensesData[0])
+    // console.log(categoryData[1].expenses, 'categoryData.expenses')
     })
     .then(() => {
 
