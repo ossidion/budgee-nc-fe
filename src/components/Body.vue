@@ -6,7 +6,7 @@ import { generateCategoryData, generateCurrentBudget, generateExpenseData } from
 
 let categoryData = []
 let budgetStore = useStore()
-console.log(Object.keys(budgetStore), "here")
+
 
 
 generateCurrentBudget().then((budgetData) => {
@@ -29,7 +29,7 @@ generateCurrentBudget().then((budgetData) => {
             categoryData[index].expenses.push(expense)
         }
         budgetStore.$patch({categories:categoryData})
-        console.log(expensesData[0])
+
     })
     .then(() => {
 
