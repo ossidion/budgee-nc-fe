@@ -1,15 +1,23 @@
 <script setup>
 import PieChart from './PieChart.vue';
+import { useColourStore } from './assets/stores/colourStore';
 
 import { useStore } from './assets/stores/currentBudgetData';
-import { generateCategoryData, generateCurrentBudget, generateExpenseData } from '@/utils/testData';
+import { generateCategoryData, generateColorData, generateCurrentBudget, generateExpenseData } from '@/utils/testData';
+
 
 let categoryData = []
 let budgetStore = useStore()
+let colorStore = useColourStore()
+let colorData = [];
 
-
-
-generateCurrentBudget().then((budgetData) => {
+generateColorData(12)
+.then((colorData)=>{
+    colorData = colorData;
+    colorStore.$patch({colourPalette:colorData})
+    return generateCurrentBudget()
+})
+.then((budgetData) => {
     budgetStore.$patch({budget:budgetData})
     return generateCategoryData(5)
 })
