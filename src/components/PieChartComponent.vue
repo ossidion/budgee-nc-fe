@@ -61,6 +61,7 @@ const chartDataUpdated = computed(() => {
 
   if (router.currentRoute.value.fullPath === "/") {
 
+
     newChartData.datasets[0].borderWidth = Array(noCats).fill(2);
     newChartData.datasets[0].borderWidth.push(2)
 
@@ -78,6 +79,7 @@ const chartDataUpdated = computed(() => {
     return newChartData
   }
   else if (router.currentRoute.value.fullPath === "/expenses/") {
+
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
       shadeColor(bgColor, 50))
 
@@ -94,6 +96,7 @@ const chartDataUpdated = computed(() => {
   }
 
   else {
+
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
       router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == index
         ?
@@ -102,14 +105,14 @@ const chartDataUpdated = computed(() => {
         shadeColor(bgColor, 50)
     )
 
-    newChartData.datasets[0].cutouts = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
+    newChartData.datasets[0].cutouts = Array(noCats).fill(0).map((bgColor, index) =>
       router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == index
         ?
-        50
+        -5
         :
         0
     )
-
+    
 
     return {
       labels: newChartData.labels.splice(0, noCats),
@@ -117,6 +120,7 @@ const chartDataUpdated = computed(() => {
         {
           backgroundColor: newChartData.datasets[0].backgroundColor.splice(0, noCats),
           data: newChartData.datasets[0].data.splice(0, noCats),
+          cutouts: newChartData.datasets[0].cutouts.splice(0, noCats)
         }
       ]
     }
@@ -126,7 +130,8 @@ const chartDataUpdated = computed(() => {
 
 
 
-ChartJS.register(ArcElement)
+
+ChartJS.register(ArcElement, Legend)
 // ChartJS.register(ArcElement, Tooltip, Legend)
 
 

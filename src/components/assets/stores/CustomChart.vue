@@ -41,11 +41,15 @@ class Custom extends DoughnutController{
   updateElement(arc, i, properties, mode) {
     
 
+    console.log(this.getDataset())
 
     const outerRadius = properties.outerRadius
     const innerRadius = properties.innerRadius
     properties.innerRadius = innerRadius +this.getDataset().cutouts[i]|| 0
     properties.outerRadius = outerRadius -this.getDataset().cutouts[i]|| 0
+
+
+    console.log(properties.innerRadius, new Date())
     
     super.updateElement(arc, i, properties, mode)
   }
@@ -69,6 +73,7 @@ Chart.register(Custom);
 
 
 const CustomChart = createTypedChart("customDoughnut",Custom)
+
 
 </script>
 

@@ -62,4 +62,3 @@ export function generateExpenseData(categoryData,no_expenses){
     }
     return Promise.resolve(expenseData)
 }
-
