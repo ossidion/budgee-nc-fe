@@ -9,7 +9,7 @@
 
     let budgetStore = useStore()
 
-    const userInput = ref("")
+    const userInput = ref(undefined)
     const newExpenseCategory = ref("")
     const newExpenseAmount = ref("")
     const optimisticMessage = ref("")
@@ -34,9 +34,8 @@
         showChangeBudgetForm()
     }
 
-    const addCategory = (newCategoryName) => {
-        budgetStore.addCategory(newCategoryName)
-        userInput.value = ""
+    const addCategory = (userInput) => {
+        budgetStore.addCategory(userInput)
     }
 
     const addNewExpense = (newExpenseCategory, newExpenseAmount, userInput) => {
@@ -44,9 +43,13 @@
             addCategory(userInput)
             budgetStore.addExpense(newExpenseAmount, budgetStore.categories.length - 1)
             optimisticMessage.value = `£${newExpenseAmount} successfully added to ${userInput}!`
-        }
+            userInput = undefined
+            showExpenseForm()
+        } else {       
         budgetStore.addExpense(newExpenseAmount, newExpenseCategory.key)
         optimisticMessage.value = `£${newExpenseAmount} successfully added to ${newExpenseCategory.item}!`
+        showExpenseForm()
+        }
     }
 
 </script>
