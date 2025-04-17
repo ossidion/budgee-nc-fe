@@ -26,15 +26,29 @@ export const useStore = defineStore("budgetData", {
         expense_id: expenseId,
       }
 
-      category.expenses.push(newExpense)
-
-      return true
+      category.expenses.push(newExpense)      
+    }, 
+    
+    addCategory(name, description, categoryId=this.categories.length, colourId = 301){
       
-      // console.log(newExpense);
+      const newCategory = {
+        category_id: categoryId,
+        colour_id: colourId,
+        description,
+        expenses: [],
+        name
+      }
+      
+      console.log(this.categories, '<<<this.categories!!!!!')
+
+      this.categories.push(newCategory)
+      
     },
+
     changeBudget(newTotalBudget) {
       this.$patch({budget:{budget:newTotalBudget}})
     }
+
   },
   getters: {
     getCategories: (state) => {
