@@ -5,7 +5,8 @@
     import 'tailwindcss';
     import { useStore } from './assets/stores/currentBudgetData';
     import { computed } from 'vue';
-    
+    import ColourPreview from './ColourPreview.vue';
+        
 
     let budgetStore = useStore()
 
@@ -66,6 +67,8 @@
 
 <template>
     <br><br>
+    <ColourPreview/>
+    <br><br/>
 
     <p>£{{ availableFunds }} left of £{{ budget }}</p>
 

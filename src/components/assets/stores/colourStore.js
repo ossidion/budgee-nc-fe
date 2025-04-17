@@ -58,6 +58,10 @@ export const useColourStore = defineStore('colour', {
 
             if (!this.colourPalette.includes(colour)) {
                 this.colourPalette.push(colour)
+                this.colourError = null
+            } else {
+                // clear error if it's already there
+                this.colourError = null
             }
         }
     }
