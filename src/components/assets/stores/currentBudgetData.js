@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 
 export const useStore = defineStore("budgetData", {
   state: () => {
@@ -46,8 +46,9 @@ export const useStore = defineStore("budgetData", {
     },
 
     changeBudget(newTotalBudget) {
-      this.budget.budget = newTotalBudget
-    },
+      this.$patch({budget:{budget:newTotalBudget}})
+    }
+
   },
   getters: {
     getCategories: (state) => {
@@ -88,6 +89,14 @@ export const useStore = defineStore("budgetData", {
         ) / 100;
       }));
     },
+    getCatPieDataFull(){
+      const getNewPie = structuredClone(this.getCatPieData)
+      
+      getNewPie.labels.push("Remaining")
+      getNewPie.datasets[0].backgroundColor.push("#008000")
+      getNewPie.datasets[0].data.push(this.getSpendingLeft)
+      return getNewPie
+    },
     getCatPieData: (state)=>{
       return {
         labels: (state.categories.map((cat) => {
@@ -107,6 +116,11 @@ export const useStore = defineStore("budgetData", {
           }
         ]
       }
+    },
+    getRatioLeftOfPeriod (){
+
+    
+      return (Date.now() - this.budget.interval.start_date)/(this.budget.interval.end_date-this.budget.interval.start_date)
     },
     getSpendingLeft () {
       return this.budget.budget - this.getCatAmounts.reduce((acc,curr)=>acc + curr,0)

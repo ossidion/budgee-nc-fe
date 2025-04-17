@@ -5,11 +5,7 @@ import { useStore } from './assets/stores/currentBudgetData'
 
 let budgetStore = useStore()
 
-console.log(budgetStore.getCategories,"<<expenses")
 
-
-console.log(budgetStore.getCatNames,"<<")
-console.log(budgetStore.getCatAmounts,"<<")
 // const categories = ref([
 //   { name: 'Food', amount: 150, percentage: 30 },
 //   { name: 'Transport', amount: 75, percentage: 15 },

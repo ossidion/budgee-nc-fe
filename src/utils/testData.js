@@ -24,9 +24,9 @@ var identName = function (a) {
 export function generateCurrentBudget(){
         return Promise.resolve({
             budget_id : 1,
-            budget : 5000+Math.round(Math.random()*100),
-            interval : {start_date : new Date(new Date()-1.21e+9*2),
-            end_date : new Date(new Date()+1.21e+9*2)
+            budget : 1000+Math.round(Math.random()*100),
+            interval : {start_date : new Date(Date.now()-1.21*10**9),
+            end_date : new Date(Date.now()+1.21*10**9)
         }
     })
 }
@@ -63,4 +63,3 @@ export function generateExpenseData(categoryData,no_expenses){
     return Promise.resolve(expenseData)
 }
 
-generateCurrentBudget().then((res)=> console.log(res))

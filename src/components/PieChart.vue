@@ -1,19 +1,26 @@
 <script setup>
 
-import { ref, toRaw } from 'vue';
+import { computed, reactive, ref, toRaw, watch } from 'vue';
 import PieChartComponent from './PieChartComponent.vue';
 import { useStore } from './assets/stores/currentBudgetData';
+import { useRouter } from 'vue-router';
 
 let budgetStore = useStore()
 
 
-budgetStore.addExpense()
-
-const categoryData = budgetStore.getCategories
+const router = useRouter()
 
 
-function printLeft (){
-  console.log(budgetStore.getSpendingLeft)
+
+
+const chartData = computed(()=>(router.currentRoute.value.fullPath==="/"?budgetStore.getCatPieDataFull:budgetStore.getCatPieData))
+
+
+function handleClick(){
+  console.log(router.currentRoute.value.fullPath==="/")
+  budgetStore.addExpense(100,0)
+  
+
 }
 
 </script>
@@ -21,8 +28,8 @@ function printLeft (){
 <template>
 
   <div id="pieChartDiv">
-    <PieChartComponent :chartData="budgetStore.getCatPieData" />
-    <button @click="printLeft">printLeft</button>
+    <PieChartComponent :chartData="chartData" :periodRatio="budgetStore.getRatioLeftOfPeriod"/>
+    <button @click="handleClick">-----</button>
   </div>
 
 </template>
@@ -30,7 +37,7 @@ function printLeft (){
 <style scoped>
 #pieChartDiv {
   height: 40vh;
-  border: solid white;
+
 
 
 }
