@@ -41,6 +41,7 @@ export const useStore = defineStore("budgetData", {
       
       this.categories.push(newCategory)
       
+      
     },
 
     changeBudget(newTotalBudget) {

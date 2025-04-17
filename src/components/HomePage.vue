@@ -49,6 +49,7 @@
         budgetStore.addExpense(newExpenseAmount, newExpenseCategory.key)
         optimisticMessage.value = `£${newExpenseAmount} successfully added to ${newExpenseCategory.item}!`
         showExpenseForm()
+        
         }
     }
 
