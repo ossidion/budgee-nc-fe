@@ -64,9 +64,9 @@ export function generateExpenseData(categoryData, no_expenses) {
     return Promise.resolve(expenseData)
 }
 
+
 export function generateColorData(no_colors) {
     const colorData = []
-    //['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#DD3B16',        '#9B59B6', '#F39C12', '#1ABC9C', '#2ECC71', '#3498DB'];
 
     for (let i = 0; i < no_colors; i++) {
         colorData.push({

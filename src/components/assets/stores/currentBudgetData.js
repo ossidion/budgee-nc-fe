@@ -39,9 +39,8 @@ export const useStore = defineStore("budgetData", {
         name
       }
       
-      console.log(this.categories, '<<<this.categories!!!!!')
-
       this.categories.push(newCategory)
+      
       
     },
 
