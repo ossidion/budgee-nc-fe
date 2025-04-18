@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import CategoryList from './CategoryList.vue'
 import { useStore } from './assets/stores/currentBudgetData'
+import Nav from './Nav.vue'
 
 let budgetStore = useStore()
 
@@ -80,6 +81,10 @@ function confirmAddCategory(){
      <div v-else @click="startAdding">
       + Add new category
      </div>
+
+     <footer>
+      <Nav></Nav>
+     </footer>
 
 </template>
 

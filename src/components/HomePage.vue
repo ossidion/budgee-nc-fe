@@ -77,16 +77,18 @@
     
 
     <section>
-
-        <!-- Add Expense Button -->
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="showExpenseForm()">
-            Add Expense
-        </button>
-
-        <!-- Change Budget Button-->
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="showChangeBudgetForm()">
-            Change Budget
-        </button><br><br>
+<div class="home-page-buttons">
+    
+            <!-- Add Expense Button -->
+            <button class= "home-page-button" @click="showExpenseForm()">
+                Add Expense
+            </button>
+    
+            <!-- Change Budget Button-->
+            <button class= "home-page-button" @click="showChangeBudgetForm()">
+            Change budget
+            </button><br><br>
+</div>
 
         <!-- Add Expense Form -->
          <form class="max-w-md mx-auto" v-if="addExpenseForm" v-on:submit.prevent>
@@ -148,6 +150,29 @@
     display: block;
     text-align: center;
 }
+
+.home-page-buttons {
+  display: flex;
+  align-items: center;
+}
+.home-page-button {
+    margin-left: 4rem;
+    background-color: #0f87f7;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: calc(infinity * 1px);
+    text-align: center;
+    justify-content: center;
+}
+
+.home-page-button:hover {
+    background-color: #0c5eda;
+}
+
+
+
+/* "ml-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" */
 
 
 </style>
