@@ -65,13 +65,13 @@ const chartDataUpdated = computed(() => {
     newChartData.datasets[0].borderWidth = Array(noCats).fill(2);
     newChartData.datasets[0].borderWidth.push(2)
 
-    console.log(newChartData.datasets[0].backgroundColor)
+    // console.log(newChartData.datasets[0].backgroundColor)
 
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
       (index < noCats)
         ? shadeColor(bgColor, 50)
         : bgColor)
-    console.log(newChartData.datasets[0].backgroundColor)
+    // console.log(newChartData.datasets[0].backgroundColor)
 
     newChartData.datasets[0].cutouts = Array(noCats).fill(5);
     newChartData.datasets[0].cutouts.push(0)
@@ -139,5 +139,12 @@ ChartJS.register(ArcElement, Legend)
 
 <template>
   <CustomChart :data="chartDataUpdated" :options="options" :periodRatio="periodRatio"></CustomChart>
-
 </template>
+
+<style scoped>
+
+
+
+
+
+</style>
