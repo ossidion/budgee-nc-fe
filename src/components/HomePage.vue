@@ -59,10 +59,22 @@
 
 <template>
     <br><br>
-    <ColourPreview/>
+    <!-- <ColourPreview/> -->
     <br><br/>
 
-    <p>£{{ budgetStore.getSpendingLeft }} left of £{{ budget }}</p>
+
+
+    <p class="budget">
+        <span class="budget-block">
+            £{{ budget }}
+        </span>
+
+        <span class="budget-block">
+            left £{{ budgetStore.getSpendingLeft }}
+        </span>
+
+    </p>
+    
 
     <section>
 
@@ -124,6 +136,18 @@
 </template>
 
 <style scoped>
+
+.budget {
+  z-index: 100;
+  position: absolute;
+  top: 26%;
+  left: 38%;
+}
+
+.budget-block {
+    display: block;
+    text-align: center;
+}
 
 
 </style>

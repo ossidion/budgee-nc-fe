@@ -78,4 +78,4 @@ export function generateColorData(no_colors) {
     return Promise.resolve(colorData)
 }
 
-console.log(generateColorData(25))
+// console.log(generateColorData(25))

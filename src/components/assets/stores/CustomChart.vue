@@ -41,7 +41,7 @@ class Custom extends DoughnutController{
   updateElement(arc, i, properties, mode) {
     
 
-    console.log(this.getDataset())
+    // console.log(this.getDataset())
 
     const outerRadius = properties.outerRadius
     const innerRadius = properties.innerRadius
@@ -49,14 +49,14 @@ class Custom extends DoughnutController{
     properties.outerRadius = outerRadius -this.getDataset().cutouts[i]|| 0
 
 
-    console.log(properties.innerRadius, new Date())
+    // console.log(properties.innerRadius, new Date())
     
     super.updateElement(arc, i, properties, mode)
   }
   draw(){
     super.draw(arguments)
 
-    console.log(props.periodRatio)
+    // console.log(props.periodRatio)
     const ctx = this.chart.ctx;
 
     
