@@ -131,7 +131,7 @@ const chartDataUpdated = computed(() => {
 
 
 
-ChartJS.register(ArcElement, Legend)
+ChartJS.register(ArcElement)
 // ChartJS.register(ArcElement, Tooltip, Legend)
 
 

@@ -15,7 +15,7 @@ generateCurrentBudget().then((budgetData) => {
 })
 .then((res) => {
     categoryData = res
-    return generateExpenseData(categoryData, 10)
+    return generateExpenseData(categoryData, 13)
 })
 .then((expensesData) => {
     const category_ids = categoryData.map((cat) => cat.category_id)
