@@ -1,6 +1,9 @@
 <script setup>
 // declare the props 
-const {name, amount, percentage, currency, locale} = defineProps({
+import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter';
+import { toRef } from 'vue'
+
+const props=  defineProps({
   name: String,
   amount: Number,
   percentage: Number,
@@ -16,12 +19,11 @@ const {name, amount, percentage, currency, locale} = defineProps({
 
 // Intl.NumberFormat is a built-in JavaScript object 
 // which formats numbers according to a specific locale and style
-const formatter = new Intl.NumberFormat(locale, {
-  style: 'currency',
-  currency: currency
-})
-
-const formattedAmount = formatter.format(amount)
+  const amountRef = toRef(props,'amount')
+  const currencyRef = toRef(props,'currency')
+  const localeRef = toRef(props,'locale')
+  
+  const formattedAmount = useCurrencyFormatter(amountRef,currencyRef,localeRef)
 </script>
 
 <template>

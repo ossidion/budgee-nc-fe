@@ -77,9 +77,7 @@ function confirmAddCategory(){
 
       <button @click="confirmAddCategory">Save</button>
      </div>
-     <div v-else @click="startAdding">
-      + Add new category
-     </div>
+        
 
 </template>
 
