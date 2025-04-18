@@ -80,12 +80,12 @@
 <div class="home-page-buttons">
     
             <!-- Add Expense Button -->
-            <button class=" ml-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="showExpenseForm()">
+            <button class= "home-page-button" @click="showExpenseForm()">
                 Add Expense
             </button>
     
             <!-- Change Budget Button-->
-            <button class= "home-page-button">
+            <button class= "home-page-button" @click="showChangeBudgetForm()">
             Change budget
             </button><br><br>
 </div>
