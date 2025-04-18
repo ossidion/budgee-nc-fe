@@ -5,15 +5,6 @@ import { useStore } from './assets/stores/currentBudgetData'
 
 let budgetStore = useStore()
 
-
-// const categories = ref([
-//   { name: 'Food', amount: 150, percentage: 30 },
-//   { name: 'Transport', amount: 75, percentage: 15 },
-//   { name: 'Clothes', amount: 200, percentage: 45 },
-//   { name: 'Leisure', amount: 50, percentage: 10 },
-// ])
-
-
 const categories = budgetStore.getCategories
 
 const selectedCurrency = ref('GBP')
@@ -29,23 +20,6 @@ const currencyLocales = {
 
 //computed property — a core Vue feature that creates reactive derived state
 const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
-
-function startAdding(){
-  isAdding.value = true
-  newCategoryName.value = ''
-}
-
-function confirmAddCategory(){
-  if(newCategoryName.value.trim()){
-    categories.value.push({
-      name: newCategoryName.value.trim(),
-      amount: 0,
-      percentage: 0,
-    })
-    newCategoryName.value = ''
-    isAdding.value = false
-  }
-}
 
 </script>
 
