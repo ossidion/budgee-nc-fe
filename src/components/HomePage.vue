@@ -10,47 +10,53 @@
 
     let budgetStore = useStore()
 
-    const userInput = ref(undefined)
-    const newExpenseCategory = ref("")
-    const newExpenseAmount = ref("")
+    
+    const getInitialData = () => ({ costOfExpense: "", newCategory: "", existingCategory: undefined, newTotalBudget: "", budgetForm: false, expenseForm: false });
+    
+    const formData = ref(getInitialData())
+    
     const optimisticMessage = ref("")
-    const changeBudgetForm = ref(false)
-    const addExpenseForm = ref(false)
-        
+
     const budget = computed(() => {
         return budgetStore.budget.budget
     })
     
     const showChangeBudgetForm = () => {
-        changeBudgetForm.value = !changeBudgetForm.value
+        optimisticMessage.value = ""
+        if (formData.value.expenseForm) formData.value.expenseForm = !formData.value.expenseForm
+        formData.value.budgetForm = !formData.value.budgetForm
     }
 
     const showExpenseForm = () => {
-        addExpenseForm.value = !addExpenseForm.value
+        if (formData.value.budgetForm) formData.value.budgetForm = !formData.value.budgetForm
+        formData.value.expenseForm = !formData.value.expenseForm
     }
     
     const updateTotalBudget = (newTotalBudget) => {
         budgetStore.changeBudget(Number(newTotalBudget))
-        userInput.value = ""
+        formData.value.newTotalBudget = ""
         showChangeBudgetForm()
     }
 
-    const addCategory = (userInput) => {
-        budgetStore.addCategory(userInput)
+    const addCategory = (newCategory) => {
+        budgetStore.addCategory(newCategory)
     }
 
-    const addNewExpense = (newExpenseCategory, newExpenseAmount, userInput) => {
-        if (userInput) {
-            addCategory(userInput)
-            budgetStore.addExpense(newExpenseAmount, budgetStore.categories.length - 1)
-            optimisticMessage.value = `£${newExpenseAmount} successfully added to ${userInput}!`
-            userInput = undefined
+    const addNewExpense = (existingCategory, costOfExpense, newCategory) => {
+        if (newCategory) {
+            addCategory(newCategory)
+            budgetStore.addExpense(costOfExpense, budgetStore.categories.length - 1)
+            optimisticMessage.value = `£${costOfExpense} successfully added to ${newCategory}!`
             showExpenseForm()
+            formData.value.costOfExpense = ""
+            formData.value.newCategory = ""
         } else {       
-        budgetStore.addExpense(newExpenseAmount, newExpenseCategory.key)
-        optimisticMessage.value = `£${newExpenseAmount} successfully added to ${newExpenseCategory.item}!`
+        budgetStore.addExpense(costOfExpense, existingCategory.key)
+        optimisticMessage.value = `£${costOfExpense} successfully added to ${existingCategory.item}!`
         showExpenseForm()
-        
+        formData.value.costOfExpense = ""
+        formData.value.newCategory = ""
+        formData.value.existingCategory = undefined
         }
     }
 
@@ -58,26 +64,11 @@
 
 
 <template>
-    <br><br>
     <!-- <ColourPreview/> -->
     <br><br/>
 
-
-
-    <p class="budget">
-        <span class="budget-block">
-            £{{ budget }}
-        </span>
-
-        <span class="budget-block">
-            left £{{ budgetStore.getSpendingLeft }}
-        </span>
-
-    </p>
-    
-
     <section>
-<div class="home-page-buttons">
+        <div class="home-page-buttons">
     
             <!-- Add Expense Button -->
             <button class= "home-page-button" @click="showExpenseForm()">
@@ -86,47 +77,51 @@
     
             <!-- Change Budget Button-->
             <button class= "home-page-button" @click="showChangeBudgetForm()">
-            Change budget
+                Change budget
             </button><br><br>
-</div>
+        </div>
 
         <!-- Add Expense Form -->
-         <form class="max-w-md mx-auto" v-if="addExpenseForm" v-on:submit.prevent>
-            <div class="relative z-0 w-full mb-5 group">
-            <input input class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  name="floting-input" v-model.number="newExpenseAmount" type="text" placeholder=" ">
-            
-            <label for="floating-input" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cost of Expense</label>
-            </div>
+        <div class="form-scroll-container" v-if="formData.expenseForm" v-on:submit.prevent>
+            <form class="form">
+                <div class="form-div relative">
+                    <input class="custom-input" name="floting-input" v-model.number="formData.costOfExpense" type="text" placeholder=" ">
+                
+                    <label for="floating-input" class="custom-label">Cost of Expense</label>
+                </div><br>
 
-            <p v-for="item, key in budgetStore.getCatNames">
-                <input type="radio" v-model="newExpenseCategory" :value="{key, item}">
-                <label for="category">{{ item }}</label><br>
-            </p>
-            <br>
-            <div class="relative z-0 w-full mb-5 group">
-            <input input class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" type="text" name="floting-input" v-model="userInput" placeholder=" "></input>
+                <p v-for="item, key in budgetStore.getCatNames">
+                    <input type="radio" v-model="formData.existingCategory" :value="{key, item}">
+                    <label for="category">{{ item }}</label><br>
+                </p>
+                
+                <div class="form-div relative">
+                <input class="custom-input" type="text" name="floting-input" v-model="formData.newCategory" placeholder=" "></input>
 
-            <label for="floating-input" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">New Category</label>
+                <label for="floating-input" class="custom-label">New Category</label>
 
-            </div>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" v-on:click="addNewExpense(newExpenseCategory, newExpenseAmount, userInput)">Save</button>
-        </form>
+                </div>
+                <button class="home-page-button" v-on:click="addNewExpense(formData.existingCategory, formData.costOfExpense, formData.newCategory)">Save</button>
+            </form>
+        </div>
 
         <!-- Change Budget Form -->
-        <form class="max-w-md mx-auto" v-if="changeBudgetForm" v-on:submit.prevent>
-            <!-- New Total Budget -->
-            <div class="relative z-0 w-full mb-5 group">
-                <input class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" name="floting-input" v-model.number="userInput" type="text" placeholder=" ">
-                <label for="floating-input" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">New Total Budget</label>
+        <div class="form-scroll-container" v-if="formData.budgetForm" v-on:submit.prevent>
+            <form class="form">
+                <!-- New Total Budget -->
+                <div class="form-div relative">
+                    <input class="custom-input" name="floating-input" v-model.number="formData.newTotalBudget" type="text" placeholder=" ">
+                    <label for="floating-input" class="custom-label">New Total Budget</label>
 
-            </div>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" v-on:click="updateTotalBudget(userInput)">Save</button><br>
+                </div>
+                <button class="home-page-button" v-on:click="updateTotalBudget(formData.newTotalBudget)">Save</button><br>
 
-            <!-- Update Available Funds -->
-             <br>
-        </form>
+                <!-- Update Available Funds -->
+                <br>
+            </form>
+        </div>
 
-        <p>{{ optimisticMessage }}</p>
+        <p class="opt-mes">{{ optimisticMessage }}</p>
 
     </section>
 
@@ -138,6 +133,12 @@
 </template>
 
 <style scoped>
+
+@import "tailwindcss";
+
+.opt-mes {
+    text-align: center;
+}
 
 .budget {
   z-index: 100;
@@ -156,7 +157,7 @@
   align-items: center;
 }
 .home-page-button {
-    margin-left: 4rem;
+    margin:1rem;
     background-color: #0f87f7;
     color: white;
     font-weight: bold;
@@ -170,9 +171,88 @@
     background-color: #0c5eda;
 }
 
+.form-scroll-container {
+  max-height: 24rem;
+  overflow-y: auto;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  background-color: #1a010133;
+  position: relative;
+}
 
+.form {
+  max-width: var(--container-md);
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-/* "ml-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" */
+.form-div {
+    z-index: 0;
+    width: full;
+    margin-bottom: 5px;
+}
 
+.custom-input {
+  display: block;
+  padding-top: 0.625rem; 
+  padding-bottom: 0.625rem;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+  font-size: 0.875rem; 
+  color: #ffffff;       
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #d1d5db;
+  appearance: none;
+  outline: none;
+}
+
+.custom-input:focus {
+  border-bottom-color: #2563eb; 
+  box-shadow: none;
+}
+
+.dark .custom-input {
+  color: #ffffff;          
+  border-bottom-color: #4b5563; 
+}
+
+.dark .custom-input:focus {
+  border-bottom-color: #3b82f6; 
+}
+
+.custom-label {
+  position: absolute;
+  font-size: 0.875rem; 
+  color: #6b7280; 
+  top: 0.75rem;
+  left: 0;
+  z-index: -10;
+  transform-origin: 0 0;
+  transition: all 0.3s;
+  transform: scale(1) translateY(0);
+}
+
+.custom-input:focus ~ .custom-label,
+.custom-input:not(:placeholder-shown) ~ .custom-label {
+  font-weight: 500;
+  transform: scale(0.75) translateY(-1.5rem);
+  color: #2563eb;
+}
+
+.dark .custom-label {
+  color: #9ca3af; 
+}
+
+.dark .custom-input:focus ~ .custom-label,
+.dark .custom-input:not(:placeholder-shown) ~ .custom-label {
+  color: #3b82f6;
+}
 
 </style>

@@ -25,7 +25,7 @@
   margin: 2rem;
 }
 .nav-icon {
-  height: 3rem;
+  height: 1.5rem;
 }
 </style>
 
