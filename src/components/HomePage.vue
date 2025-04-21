@@ -22,6 +22,7 @@
     })
     
     const showChangeBudgetForm = () => {
+        optimisticMessage.value = ""
         if (formData.value.expenseForm) formData.value.expenseForm = !formData.value.expenseForm
         formData.value.budgetForm = !formData.value.budgetForm
     }
@@ -81,40 +82,44 @@
         </div>
 
         <!-- Add Expense Form -->
-         <form class="form" v-if="formData.expenseForm" v-on:submit.prevent>
-            <div class="form-div relative">
-                <input class="custom-input" name="floting-input" v-model.number="formData.costOfExpense" type="text" placeholder=" ">
-            
-                <label for="floating-input" class="custom-label">Cost of Expense</label>
-            </div><br>
+        <div class="form-scroll-container" v-if="formData.expenseForm" v-on:submit.prevent>
+            <form class="form">
+                <div class="form-div relative">
+                    <input class="custom-input" name="floting-input" v-model.number="formData.costOfExpense" type="text" placeholder=" ">
+                
+                    <label for="floating-input" class="custom-label">Cost of Expense</label>
+                </div><br>
 
-            <p v-for="item, key in budgetStore.getCatNames">
-                <input type="radio" v-model="formData.existingCategory" :value="{key, item}">
-                <label for="category">{{ item }}</label><br>
-            </p>
-            
-            <div class="form-div relative">
-            <input class="custom-input" type="text" name="floting-input" v-model="formData.newCategory" placeholder=" "></input>
+                <p v-for="item, key in budgetStore.getCatNames">
+                    <input type="radio" v-model="formData.existingCategory" :value="{key, item}">
+                    <label for="category">{{ item }}</label><br>
+                </p>
+                
+                <div class="form-div relative">
+                <input class="custom-input" type="text" name="floting-input" v-model="formData.newCategory" placeholder=" "></input>
 
-            <label for="floating-input" class="custom-label">New Category</label>
+                <label for="floating-input" class="custom-label">New Category</label>
 
-            </div>
-            <button class="home-page-button" v-on:click="addNewExpense(formData.existingCategory, formData.costOfExpense, formData.newCategory)">Save</button>
-        </form>
+                </div>
+                <button class="home-page-button" v-on:click="addNewExpense(formData.existingCategory, formData.costOfExpense, formData.newCategory)">Save</button>
+            </form>
+        </div>
 
         <!-- Change Budget Form -->
-        <form class="form" v-if="formData.budgetForm" v-on:submit.prevent>
-            <!-- New Total Budget -->
-            <div class="form-div relative">
-                <input class="custom-input" name="floating-input" v-model.number="formData.newTotalBudget" type="text" placeholder=" ">
-                <label for="floating-input" class="custom-label">New Total Budget</label>
+        <div class="form-scroll-container" v-if="formData.budgetForm" v-on:submit.prevent>
+            <form class="form">
+                <!-- New Total Budget -->
+                <div class="form-div relative">
+                    <input class="custom-input" name="floating-input" v-model.number="formData.newTotalBudget" type="text" placeholder=" ">
+                    <label for="floating-input" class="custom-label">New Total Budget</label>
 
-            </div>
-            <button class="home-page-button" v-on:click="updateTotalBudget(formData.newTotalBudget)">Save</button><br>
+                </div>
+                <button class="home-page-button" v-on:click="updateTotalBudget(formData.newTotalBudget)">Save</button><br>
 
-            <!-- Update Available Funds -->
-             <br>
-        </form>
+                <!-- Update Available Funds -->
+                <br>
+            </form>
+        </div>
 
         <p class="opt-mes">{{ optimisticMessage }}</p>
 
@@ -166,8 +171,24 @@
     background-color: #0c5eda;
 }
 
+.form-scroll-container {
+  max-height: 24rem;
+  overflow-y: auto;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  background-color: #1a010133;
+  position: relative;
+}
+
 .form {
-    max-width: var(--container-md);
+  max-width: var(--container-md);
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .form-div {
