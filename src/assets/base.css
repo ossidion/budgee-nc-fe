@@ -26,7 +26,7 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--vt-c-white);
+  /* --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
 
@@ -34,7 +34,18 @@
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1); */
+
+  /* Primary Light Green Palette for Finance Feel */ */
+  --c-green-base: #6EE7B7;
+  --c-green-dark: #10B981;
+  --c-green-accent: #34D399;
+  /* Override semantic colors */
+  --color-background: #F0FDF4;
+  --color-text: #1E3A1E;
+  --color-heading: #14532D;
+  --color-border: #D1FAE5;
+  --color-border-hover: #A7F3D0;
 
   --section-gap: 160px;
 }
@@ -43,7 +54,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--vt-c-black);
+    /* --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
 
@@ -51,7 +62,12 @@
     --color-border-hover: var(--vt-c-divider-dark-1);
 
     --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+    --color-text: var(--vt-c-text-dark-2); */
+    --color-background: #1F2937;
+    --color-text: #D1FAE5;
+    --color-heading: #6EE7B7;
+    --color-border: #374151;
+    --color-border-hover: #4B5563;
   }
 }
 
