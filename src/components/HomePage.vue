@@ -5,8 +5,7 @@
     import 'tailwindcss';
     import { useStore } from './assets/stores/currentBudgetData';
     import { computed } from 'vue';
-    import ColourPreview from './ColourPreview.vue';
-        
+    import ColourPreview from './ColourPreview.vue';        
 
     let budgetStore = useStore()
 
@@ -64,9 +63,7 @@
 
 
 <template>
-    <!-- <ColourPreview/> -->
     <br><br/>
-
     <section>
         <div class="home-page-buttons">
     
@@ -86,7 +83,6 @@
             <form class="form">
                 <div class="form-div relative">
                     <input class="custom-input" name="floting-input" v-model.number="formData.costOfExpense" type="text" placeholder=" ">
-                
                     <label for="floating-input" class="custom-label">Cost of Expense</label>
                 </div><br>
 
@@ -96,10 +92,14 @@
                 </p>
                 
                 <div class="form-div relative">
-                <input class="custom-input" type="text" name="floting-input" v-model="formData.newCategory" placeholder=" "></input>
+                    <input class="custom-input" type="text" name="floting-input" v-model="formData.newCategory" placeholder=" "></input>
+                    <label for="floating-input" class="custom-label">New Category</label>
+                </div>
 
-                <label for="floating-input" class="custom-label">New Category</label>
-
+                <div class="form-div relative">
+                    <input class="custom-input" type="text" name="floting-input" placeholder=" ">
+                    <label for="floating-input" class="custom-label">Category Colour</label>
+                    <!-- <ColourPreview/> -->
                 </div>
                 <button class="home-page-button" v-on:click="addNewExpense(formData.existingCategory, formData.costOfExpense, formData.newCategory)">Save</button>
             </form>
@@ -136,123 +136,6 @@
 
 @import "tailwindcss";
 
-.opt-mes {
-    text-align: center;
-}
 
-.budget {
-  z-index: 100;
-  position: absolute;
-  top: 26%;
-  left: 38%;
-}
-
-.budget-block {
-    display: block;
-    text-align: center;
-}
-
-.home-page-buttons {
-  display: flex;
-  align-items: center;
-}
-.home-page-button {
-    margin:1rem;
-    background-color: #0f87f7;
-    color: white;
-    font-weight: bold;
-    padding: 0.5rem;
-    border-radius: calc(infinity * 1px);
-    text-align: center;
-    justify-content: center;
-}
-
-.home-page-button:hover {
-    background-color: #0c5eda;
-}
-
-.form-scroll-container {
-  max-height: 24rem;
-  overflow-y: auto;
-  padding: 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
-  background-color: #1a010133;
-  position: relative;
-}
-
-.form {
-  max-width: var(--container-md);
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.form-div {
-    z-index: 0;
-    width: full;
-    margin-bottom: 5px;
-}
-
-.custom-input {
-  display: block;
-  padding-top: 0.625rem; 
-  padding-bottom: 0.625rem;
-  padding-left: 0;
-  padding-right: 0;
-  width: 100%;
-  font-size: 0.875rem; 
-  color: #ffffff;       
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid #d1d5db;
-  appearance: none;
-  outline: none;
-}
-
-.custom-input:focus {
-  border-bottom-color: #2563eb; 
-  box-shadow: none;
-}
-
-.dark .custom-input {
-  color: #ffffff;          
-  border-bottom-color: #4b5563; 
-}
-
-.dark .custom-input:focus {
-  border-bottom-color: #3b82f6; 
-}
-
-.custom-label {
-  position: absolute;
-  font-size: 0.875rem; 
-  color: #6b7280; 
-  top: 0.75rem;
-  left: 0;
-  z-index: -10;
-  transform-origin: 0 0;
-  transition: all 0.3s;
-  transform: scale(1) translateY(0);
-}
-
-.custom-input:focus ~ .custom-label,
-.custom-input:not(:placeholder-shown) ~ .custom-label {
-  font-weight: 500;
-  transform: scale(0.75) translateY(-1.5rem);
-  color: #2563eb;
-}
-
-.dark .custom-label {
-  color: #9ca3af; 
-}
-
-.dark .custom-input:focus ~ .custom-label,
-.dark .custom-input:not(:placeholder-shown) ~ .custom-label {
-  color: #3b82f6;
-}
 
 </style>
