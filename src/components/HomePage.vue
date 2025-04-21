@@ -66,17 +66,6 @@
     <!-- <ColourPreview/> -->
     <br><br/>
 
-    <p class="budget">
-        <span class="budget-block">
-            £{{ budget }}
-        </span>
-
-        <span class="budget-block">
-            left £{{ budgetStore.getSpendingLeft }}
-        </span>
-
-    </p>
-
     <section>
         <div class="home-page-buttons">
     
@@ -189,39 +178,39 @@
 
 .custom-input {
   display: block;
-  padding-top: 0.625rem;   /* py-2.5 */
+  padding-top: 0.625rem; 
   padding-bottom: 0.625rem;
   padding-left: 0;
   padding-right: 0;
   width: 100%;
-  font-size: 0.875rem;     /* text-sm */
-  color: #ffffff;          /* text-gray-900 */
+  font-size: 0.875rem; 
+  color: #ffffff;       
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #d1d5db; /* border-gray-300 */
+  border-bottom: 2px solid #d1d5db;
   appearance: none;
   outline: none;
 }
 
 .custom-input:focus {
-  border-bottom-color: #2563eb; /* focus:border-blue-600 */
+  border-bottom-color: #2563eb; 
   box-shadow: none;
 }
 
 .dark .custom-input {
-  color: #ffffff;              /* dark:text-white */
-  border-bottom-color: #4b5563; /* dark:border-gray-600 */
+  color: #ffffff;          
+  border-bottom-color: #4b5563; 
 }
 
 .dark .custom-input:focus {
-  border-bottom-color: #3b82f6; /* dark:focus:border-blue-500 */
+  border-bottom-color: #3b82f6; 
 }
 
 .custom-label {
   position: absolute;
-  font-size: 0.875rem; /* text-sm */
-  color: #6b7280;       /* text-gray-500 */
-  top: 0.75rem;         /* top-3 */
+  font-size: 0.875rem; 
+  color: #6b7280; 
+  top: 0.75rem;
   left: 0;
   z-index: -10;
   transform-origin: 0 0;
@@ -233,16 +222,16 @@
 .custom-input:not(:placeholder-shown) ~ .custom-label {
   font-weight: 500;
   transform: scale(0.75) translateY(-1.5rem);
-  color: #2563eb; /* focus:text-blue-600 */
+  color: #2563eb;
 }
 
 .dark .custom-label {
-  color: #9ca3af; /* dark:text-gray-400 */
+  color: #9ca3af; 
 }
 
 .dark .custom-input:focus ~ .custom-label,
 .dark .custom-input:not(:placeholder-shown) ~ .custom-label {
-  color: #3b82f6; /* dark:focus:text-blue-500 */
+  color: #3b82f6;
 }
 
 </style>
