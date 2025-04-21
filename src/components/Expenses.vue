@@ -1,11 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import CategoryList from './CategoryList.vue'
-import { useStore } from './assets/stores/currentBudgetData'
+import { expenseStore } from './assets/stores/categoriesStore'
 
-let budgetStore = useStore()
-
-const categories = budgetStore.getCategories
+const myExpenseStore = expenseStore();
 
 const selectedCurrency = ref('GBP')
 const newCategoryName = ref('')
@@ -18,8 +16,25 @@ const currencyLocales = {
   JPY: 'ja-JP',
 }
 
-//computed property — a core Vue feature that creates reactive derived state
 const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
+onMounted(async () => {
+  await myExpenseStore.getCategories()
+  await myExpenseStore.fetchExpensesFromApi()
+
+  const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
+    ...cat,
+    category_id: cat._id,
+    expenses: []
+  }));
+
+  for (const expense of myExpenseStore.expenses) {
+    const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
+    if (cat) {
+      cat.expenses.push(expense);
+    }
+  }
+})
+
 
 </script>
 
@@ -37,7 +52,7 @@ const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
     </div>
     <!-- List -->
     <CategoryList
-      :categories="categories"
+      :categories="myExpenseStore.categories"
       :currency="selectedCurrency"
       :locale="selectedLocale"
     />
