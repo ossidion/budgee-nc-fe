@@ -1,12 +1,20 @@
 <script setup>
 
+// function toggleDark () {
+//   const element 
+// }
 
 
 </script>
 
 <template>
 
-<header>Budgee</header>
+  <div class="header">
+    <header>Budgee</header>
+    <button @click="toggle-theme" class="header-button">
+      Toggle Mode
+    </button>
+  </div>
 
 </template>
 
