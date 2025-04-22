@@ -28,7 +28,9 @@ export const postExpense=(date,amount,description,category_id,budget_id)=>{
     }
 )}
 
-
+export const deleteExpense = (id) => {
+  return api.delete(`/expenses/${id}`)  
+};
 export const getCategories = () => {
   return api.get("/categories").then(({ data: { categories } }) => {
     return categories;
@@ -40,7 +42,9 @@ export const postCategory=(name,description,colour_id)=>{
     }
 )}
 
-
+export const deleteCategory = (id) => {
+  return api.delete(`/categories/${id}`)
+};
 export const getUsers =()=>{
   return api.get("/users").then(({data:{users}})=>{
     return users
@@ -78,7 +82,9 @@ export const modifyBudgets =(_id,budget,start_date,end_date)=>{
     return data
   })
 }
-
+export const deleteBudget = (id) => {
+  return api.delete(`/budgets/${id}`)
+};
 export const getColours =()=>{
   return api.get("/colours").then(({data:{colours}})=>{
     return colours
@@ -89,9 +95,9 @@ export const postColour=(name,hex_code)=>{
    return newColour
     }
 )}
-
-
-
+export const deleteColour = (id) => {
+  return api.delete(`/colours/${id}`)
+};
 
 
 
