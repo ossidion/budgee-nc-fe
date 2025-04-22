@@ -33,7 +33,18 @@ import {Chart, DoughnutController} from "chart.js";
 
 import {createTypedChart} from "vue-chartjs";
 
-class Custom extends DoughnutController {
+
+
+import { Chart, DoughnutController } from 'chart.js'
+
+
+
+import { createTypedChart } from 'vue-chartjs'
+
+
+
+class Custom extends DoughnutController{
+
   updateElement(arc, i, properties, mode) {
     // console.log(this.getDataset())
 
@@ -50,7 +61,13 @@ class Custom extends DoughnutController {
     super.draw(arguments);
 
     // console.log(props.periodRatio)
-    const ctx = this.chart.ctx;
+    // const ctx = this.chart.ctx;
+
+    // const center = [ctx.canvas.width/4,ctx.canvas.height/4]
+
+    // ctx.font = "48px serif";
+
+    // ctx.fillText(this.getDataset().budgetInfo[0], center[0], center[1])
   }
 }
 Custom.id = "customDoughnut";
@@ -76,6 +93,7 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
         left £{{ budgetStore.getSpendingLeft.toFixed(2) }}
       </p>
     </div>
+
   </div>
 </template>
 
@@ -94,12 +112,13 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
 
 .budget-overlay {
   position: absolute;
-  top: 58%;
+  top: 50%;
   left: 50.5%;
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 10;
   font-weight: bold;
+
   font-size: 0.8rem;
   pointer-events: none;
 }
@@ -108,6 +127,10 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 0.25rem;
+
+  font-size: 0.7rem;
+  pointer-events: none; 
+
 }
 
 .remaining-budget.positive {
