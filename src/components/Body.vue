@@ -11,6 +11,7 @@ let budgetStore = useStore()
 let colorStore = useColourStore()
 let colorData = [];
 
+
 generateColorData(12)
 .then((colorData)=>{
     colorData = colorData;
@@ -65,7 +66,7 @@ generateColorData(12)
     display: flex;
     align-items: center;
     flex-direction: column;
-
-
+    position: relative;
 }
+
 </style>

@@ -3,6 +3,9 @@ import { ref, computed, onMounted } from 'vue'
 import CategoryList from './CategoryList.vue'
 import { expenseStore } from './assets/stores/categoriesStore'
 
+
+
+
 const myExpenseStore = expenseStore();
 
 const selectedCurrency = ref('GBP')
@@ -67,6 +70,10 @@ onMounted(async () => {
       <button @click="confirmAddCategory">Save</button>
      </div>
         
+
+     <footer>
+      <Nav></Nav>
+     </footer>
 
 </template>
 
