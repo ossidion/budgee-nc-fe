@@ -1,21 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import CategoryList from './CategoryList.vue'
-import { useStore } from './assets/stores/currentBudgetData'
-import Nav from './Nav.vue'
-
-let budgetStore = useStore()
+import { expenseStore } from './assets/stores/categoriesStore'
 
 
-// const categories = ref([
-//   { name: 'Food', amount: 150, percentage: 30 },
-//   { name: 'Transport', amount: 75, percentage: 15 },
-//   { name: 'Clothes', amount: 200, percentage: 45 },
-//   { name: 'Leisure', amount: 50, percentage: 10 },
-// ])
 
 
-const categories = budgetStore.getCategories
+const myExpenseStore = expenseStore();
 
 const selectedCurrency = ref('GBP')
 const newCategoryName = ref('')
@@ -28,25 +19,25 @@ const currencyLocales = {
   JPY: 'ja-JP',
 }
 
-//computed property — a core Vue feature that creates reactive derived state
 const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
+onMounted(async () => {
+  await myExpenseStore.getCategories()
+  await myExpenseStore.fetchExpensesFromApi()
 
-function startAdding(){
-  isAdding.value = true
-  newCategoryName.value = ''
-}
+  const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
+    ...cat,
+    category_id: cat._id,
+    expenses: []
+  }));
 
-function confirmAddCategory(){
-  if(newCategoryName.value.trim()){
-    categories.value.push({
-      name: newCategoryName.value.trim(),
-      amount: 0,
-      percentage: 0,
-    })
-    newCategoryName.value = ''
-    isAdding.value = false
+  for (const expense of myExpenseStore.expenses) {
+    const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
+    if (cat) {
+      cat.expenses.push(expense);
+    }
   }
-}
+})
+
 
 </script>
 
@@ -64,7 +55,7 @@ function confirmAddCategory(){
     </div>
     <!-- List -->
     <CategoryList
-      :categories="categories"
+      :categories="myExpenseStore.categories"
       :currency="selectedCurrency"
       :locale="selectedLocale"
     />
@@ -78,9 +69,7 @@ function confirmAddCategory(){
 
       <button @click="confirmAddCategory">Save</button>
      </div>
-     <div v-else @click="startAdding">
-      + Add new category
-     </div>
+        
 
      <footer>
       <Nav></Nav>
