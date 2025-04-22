@@ -1,13 +1,15 @@
 import { defineStore, storeToRefs } from "pinia";
+import { useColourStore } from "./colourStore";
 
 export const useStore = defineStore("budgetData", {
+  
   state: () => {
     return { categories: [], budget: {budget_id: 1, budget: 0, interval: {start_date: new Date(), end_date: new Date()}} };
   },
   // could also be defined as
   //  state: () => ({ count: 0 })
 
-
+  
   actions: {
     addExpense(amount, categoryId, budgetId = 1, date=new Date(), description = "", expenseId = 0) {
       
@@ -51,6 +53,7 @@ export const useStore = defineStore("budgetData", {
   },
   getters: {
     getCategories: (state) => {
+      let colorStore = useColourStore()
       const newCategories = state.categories.map((cat) => {
         const newCat = { ...cat };
         newCat.amount =
@@ -70,6 +73,10 @@ export const useStore = defineStore("budgetData", {
       newCategories.forEach(
         (cat) =>
           (cat.percentage = Math.round((cat.amount / totalSpend) * 10000) / 100)
+      );
+      newCategories.forEach(
+        (cat) =>
+          cat.hex_code = colorStore.getHexFromId(cat.colour_id)
       );
       return newCategories;
     },
@@ -94,16 +101,18 @@ export const useStore = defineStore("budgetData", {
       getNewPie.labels.push("Remaining")
       getNewPie.datasets[0].backgroundColor.push("#008000")
       getNewPie.datasets[0].data.push(this.getSpendingLeft)
+      getNewPie.datasets[0].budgetInfo = [this.getSpendingLeft,this.budget.budget]
       return getNewPie
     },
     getCatPieData: (state)=>{
+      let colorStore = useColourStore()
       return {
         labels: (state.categories.map((cat) => {
           return cat.name;
         })),
         datasets: [
           {
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#DD3B16'],
+            backgroundColor: state.categories.map((cat)=>colorStore.getHexFromId(cat.colour_id)),
             data: (state.categories.map((cat) => {
               return  Math.round(
                 100 *

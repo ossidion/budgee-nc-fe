@@ -7,13 +7,11 @@ const api = axios.create({
 
 export const getExpenses = () => {
     return api.get("/expenses").then(({data}) => {
-        console.log(data)
       return data;
     });
   };
 export const getCategories = () => {
     return api.get("/categories").then(({data:{categories}}) => {
-        console.log(categories)
       return categories;
     });
   };

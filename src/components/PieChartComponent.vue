@@ -2,7 +2,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { computed } from 'vue';
 import { Doughnut } from 'vue-chartjs'
-import { shadeColor } from '@/utils/chartData';
+import { changeHSL, shadeColor } from '@/utils/chartData';
 import { useRouter } from 'vue-router';
 import CustomChart from './assets/stores/CustomChart.vue';
 
@@ -34,7 +34,10 @@ const options = {
   responsive: true,
   maintainAspectRatio: false,
   lineTension: 100,
-  cutout: 50,
+  cutout: 45,
+  layout: {
+            padding: 10
+        },
   onClick: function (event, elements) {
     if (elements.length > 0) {
       const currPath = router.currentRoute._rawValue.fullPath;
@@ -43,10 +46,15 @@ const options = {
 
       if (currPath === "/") {
         if (elements[0].index !== noCats)
-          router.push(`/expenses/`)
+          router.push(`/expenses`)
       }
-      if (currPath.startsWith("/expenses/")) {
-        router.push(`/expenses/${elements[0].index}`)
+      if (currPath.startsWith("/expenses")) {
+        if (currPath === `/expenses/${elements[0].index}`){
+          router.push(`/expenses`)
+        }
+        else{
+          router.push(`/expenses/${elements[0].index}`)
+        }
       }
 
     }
@@ -56,6 +64,8 @@ const options = {
 }
 
 const chartDataUpdated = computed(() => {
+
+
   const noCats = Math.max(props.chartData.labels.length - 1, 0)
   const newChartData = structuredClone(props.chartData)
 
@@ -69,42 +79,45 @@ const chartDataUpdated = computed(() => {
 
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
       (index < noCats)
-        ? shadeColor(bgColor, 50)
+        ? changeHSL(bgColor,{s:100,l:80})
         : bgColor)
     // console.log(newChartData.datasets[0].backgroundColor)
 
     newChartData.datasets[0].cutouts = Array(noCats).fill(5);
     newChartData.datasets[0].cutouts.push(0)
-
+    
     return newChartData
   }
-  else if (router.currentRoute.value.fullPath === "/expenses/") {
+  else if (router.currentRoute.value.fullPath === "/expenses" || router.currentRoute.value.fullPath === "/expenses/") {
 
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
-      shadeColor(bgColor, 50))
+      changeHSL(bgColor,{s:100,l:80}))
 
+    newChartData.datasets[0].cutouts = Array(noCats).fill(0)
 
     return {
       labels: newChartData.labels.splice(0, noCats),
       datasets: [
         {
           backgroundColor: newChartData.datasets[0].backgroundColor.splice(0, noCats),
-          data: newChartData.datasets[0].data.splice(0, noCats),
+          data: newChartData.datasets[0].data.splice(0,noCats),
+          cutouts: newChartData.datasets[0].cutouts.splice(0, noCats),
+          budgetInfo: newChartData.datasets[0].budgetInfo
         }
       ]
     }
   }
 
   else {
-
+    console.log("yes")
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
       router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == index
         ?
         bgColor
         :
-        shadeColor(bgColor, 50)
+        changeHSL(bgColor,{s:100,l:80})
     )
-
+    
     newChartData.datasets[0].cutouts = Array(noCats).fill(0).map((bgColor, index) =>
       router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == index
         ?
@@ -112,18 +125,19 @@ const chartDataUpdated = computed(() => {
         :
         0
     )
-    
 
-    return {
+    const newChartData_ = {
       labels: newChartData.labels.splice(0, noCats),
       datasets: [
         {
           backgroundColor: newChartData.datasets[0].backgroundColor.splice(0, noCats),
           data: newChartData.datasets[0].data.splice(0, noCats),
-          cutouts: newChartData.datasets[0].cutouts.splice(0, noCats)
+          cutouts: newChartData.datasets[0].cutouts.splice(0, noCats),
+          budgetInfo: newChartData.datasets[0].budgetInfo
         }
       ]
     }
+    return newChartData_
   }
 
 })
@@ -143,7 +157,7 @@ ChartJS.register(ArcElement)
 
 <style scoped>
 
-
+@import "tailwindcss";
 
 
 

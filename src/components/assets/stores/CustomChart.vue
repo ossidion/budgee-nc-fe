@@ -43,6 +43,7 @@ import { createTypedChart } from 'vue-chartjs'
 
 
 class Custom extends DoughnutController{
+
   updateElement(arc, i, properties, mode) {
     
 
@@ -62,7 +63,13 @@ class Custom extends DoughnutController{
     super.draw(arguments)
 
     // console.log(props.periodRatio)
-    const ctx = this.chart.ctx;
+    // const ctx = this.chart.ctx;
+
+    // const center = [ctx.canvas.width/4,ctx.canvas.height/4]
+
+    // ctx.font = "48px serif";
+
+    // ctx.fillText(this.getDataset().budgetInfo[0], center[0], center[1])
   }
 }
 Custom.id = 'customDoughnut';
@@ -85,8 +92,8 @@ const CustomChart = createTypedChart("customDoughnut",Custom)
     <CustomChart :data="data" :options="options"></CustomChart>  </div>
 
   <div class="budget-overlay">
+    <p>£{{ budgetStore.getSpendingLeft.toFixed(2) }} left of</p>
     <p>£{{ budgetStore.budget.budget.toFixed(2) }}</p>
-    <p>left £{{ budgetStore.getSpendingLeft.toFixed(2) }}</p>
   </div>
 </div>
 
@@ -107,13 +114,13 @@ const CustomChart = createTypedChart("customDoughnut",Custom)
 
 .budget-overlay {
   position: absolute;
-  top: 58%;
+  top: 50%;
   left: 50.5%;
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 10;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.7rem;
   pointer-events: none; 
 }
 
