@@ -76,7 +76,7 @@
             <!-- Change Budget Button-->
             <button class= "home-page-button" @click="showChangeBudgetForm()">
                 Change budget
-            </button><br><br>
+            </button>
         </div>
 
         <!-- Add Expense Form -->

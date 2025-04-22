@@ -1,11 +1,27 @@
 @import "./base.css";
 @import "tailwindcss";
 
-body,
-#app {
-  font-family: "Nunito", sans-serif;
+
+
+@import "./base.css";
+@import "tailwindcss";
+
+.footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
 }
 
+body, #app {
+  font-family: "Nunito", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Allow scrolling for the content */
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -13,6 +29,15 @@ body,
   padding-right: 1rem;
   font-weight: normal;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the footer sticks at the bottom even when content is short */
+}
+
+/* The content should take the available space above the footer */
+.main-content {
+  flex: 1;
+  overflow: auto; /* Allow content scrolling */
 }
 
 header {
@@ -20,6 +45,7 @@ header {
   font-family: "Nunito", sans-serif;
   text-align: center;
 }
+
 a,
 .green {
   text-decoration: none;
@@ -35,11 +61,13 @@ a,
 }
 
 @media (min-width: 1024px) {
+  /* Add any responsive styles for larger screens */
 }
 
 .opt-mes {
   text-align: center;
 }
+
 
 .budget {
   z-index: 100;

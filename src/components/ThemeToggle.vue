@@ -55,6 +55,8 @@ const moonIcon = `
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
+
+
 .icon-wrapper {
   display: flex;
   align-items: center;
@@ -86,6 +88,22 @@ const moonIcon = `
   border: 0;
   padding: 0;
   margin: -1px;
+}
+
+@media (max-width: 600px) {
+  .theme-toggle-button {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .theme-toggle-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .icon-wrapper {
+    padding: 2px;
+  }
 }
 </style>
 
