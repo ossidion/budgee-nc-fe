@@ -1,4 +1,5 @@
 <script setup>
+import { PLACEHOLDER_GET_CURR_BUDGET } from '@/api/requests';
 import PieChart from './PieChart.vue';
 import { useColourStore } from './assets/stores/colourStore';
 
@@ -73,7 +74,7 @@ generateColorData(6)
 #routedComponent {
 
     overflow: scroll;
-    height: 200px;
+    height: 300px;
     width: 100%;
 
 }

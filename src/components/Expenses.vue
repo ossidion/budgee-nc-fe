@@ -2,14 +2,11 @@
 import { ref, computed, onMounted } from 'vue'
 import CategoryList from './CategoryList.vue'
 import { expenseStore } from './assets/stores/categoriesStore'
-
-
+import { useStore } from './assets/stores/currentBudgetData'
 
 
 let budgetStore = useStore()
 
-
-const myExpenseStore = expenseStore();
 
 const newCategoryName = ref('')
 const isAdding = ref(false)
@@ -29,6 +26,9 @@ function confirmAddCategory(){
     })
     newCategoryName.value = ''
     isAdding.value = false
+ }}
+
+const selectedCurrency = ref(0)
 
 const currencyLocales = {
   GBP: 'en-GB',
@@ -38,24 +38,24 @@ const currencyLocales = {
 }
 
 const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
-onMounted(async () => {
-  await myExpenseStore.getCategories()
-  await myExpenseStore.fetchExpensesFromApi()
+// onMounted(async () => {
+//   await myExpenseStore.getCategories()
+//   await myExpenseStore.fetchExpensesFromApi()
 
-  const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
-    ...cat,
-    category_id: cat._id,
-    expenses: []
-  }));
+//   const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
+//     ...cat,
+//     category_id: cat._id,
+//     expenses: []
+//   }));
 
-  for (const expense of myExpenseStore.expenses) {
-    const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
-    if (cat) {
-      cat.expenses.push(expense);
-    }
+//   for (const expense of myExpenseStore.expenses) {
+//     const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
+//     if (cat) {
+//       cat.expenses.push(expense);
+//     }
 
-  }
-})
+//   }
+// })
 
 
 </script>
@@ -66,11 +66,7 @@ onMounted(async () => {
     <!-- List -->
     <CategoryList
 
-      :categories="categories"
-      :categories="myExpenseStore.categories"
-      :currency="selectedCurrency"
-      :locale="selectedLocale"
-
+      :categories="budgetStore.getCategories"
     />
     <!-- Add category input or button -->
      <div v-if="isAdding">

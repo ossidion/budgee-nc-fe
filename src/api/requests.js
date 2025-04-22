@@ -25,8 +25,6 @@ export const getUsers =()=>{
 }
 export const getBudgetsByUser =(username)=>{
   return api.get(`/${username}/budgets`).then((data)=>{
-    console.log(budgetsByUser,"budgetsByUser")
-    console.log(data,"data")
 
     return data
   })
@@ -34,7 +32,6 @@ export const getBudgetsByUser =(username)=>{
 
 export const getBudgets =()=>{
   return api.get("/budgets").then(({data:{allBudgets}})=>{
-    console.log(allBudgets,"budgets")
     return allBudgets
   })
 }
@@ -45,10 +42,19 @@ export const getColours =()=>{
   })
 }
 
+export const PLACEHOLDER_GET_CURR_BUDGET= ()=>{
+  return getBudgets().then((allBudgets)=>{
+    return allBudgets.at(-1)
+  })
+}
 
-getExpenses()
-getCategories()
-getUsers()
-getBudgets()
-getColours()
-getBudgetsByUser()
+
+// getExpenses()
+// getCategories()
+// getUsers()
+// getBudgets()
+// getColours()
+//getBudgetsByUser('Lunahen78')
+PLACEHOLDER_GET_CURR_BUDGET().then((budget)=>{
+  console.log(budget)
+})

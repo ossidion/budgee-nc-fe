@@ -2,10 +2,10 @@ import { computed } from 'vue'
 
 export function useCurrencyFormatter(amount, currency, locale) {
   return computed(() => {
-    const formatter = new Intl.NumberFormat(locale.value || 'en-GB', {
+    const formatter = new Intl.NumberFormat(locale || 'en-GB', {
       style: 'currency',
-      currency: currency.value || 'GBP',
+      currency: currency || 'GBP',
     })
-    return formatter.format(amount.value || 0)
+    return formatter.format(amount || 0)
   })
 }
