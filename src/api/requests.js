@@ -5,6 +5,7 @@ const api = axios.create({
 });
 
 
+
 export const getExpenses = () => {
   return api.get("/expenses").then(({ data }) => {
     //console.log(data, "Expenses")
@@ -20,42 +21,56 @@ export const getExpensesByCategoryId = (category_id) => {
 };
 export const getExpensesByBudgetIdCategoryId = (budget_id,category_id) => {
   return api.get(`/expenses/${budget_id}/${category_id}`).then(({ data :{expenses}}) => {
-    console.log( expenses,"Expenses By budget_id and Category_id")
+    //console.log( expenses,"Expenses By budget_id and Category_id")
     return expenses;
   });
 };
+
 export const getCategories = () => {
   return api.get("/categories").then(({ data: { categories } }) => {
     //console.log(categories, "Categories")
     return categories;
   });
 };
+// export const getCategoryById = () => {
+//   return api.get("/categories").then(({ data: { categories } }) => {
+//     //console.log(categories, "Categories")
+//     return categories;
+//   });
+// };
+
 export const getUsers =()=>{
   return api.get("/users").then(({data:{users}})=>{
    //console.log(users,"users")
     return users
   })
 }
-// export const getBudgetsByUser =(username)=>{
-//   return api.get(`/${username}/budgets`).then((data)=>{
-//     //console.log(budgetsByUser,"budgetsByUser")
+export const getUserById = (user_id) => {
+  return api.get(`/users/${user_id}`).then(({ data :{user}}) => {
+    //console.log(user, "user by Id")
+    return user;
+  });
+};
+export const getBudgetsByUser =(username)=>{
+  return api.get(`/${username}/budgets`).then(({data:{budgetsByUser}})=>{
+    //console.log(budgetsByUser,"budgetsByUser")
 
-//     return data
-//   })
-// }
+    return budgetsByUser
+  })
+}
 
-// export const getBudgets =()=>{
-//   return api.get("/budgets").then(({data:{allBudgets}})=>{
-//    // console.log(allBudgets,"budgets")
-//     return allBudgets
-//   })
-// }
-// export const getBudgetsById =(id)=>{
-//   return api.get(`/budgets/${id}`).then(({data:{budget}})=>{
-//    //console.log(budget,"budgetsById")
-//     return budget
-//   })
-// }
+export const getBudgets =()=>{
+  return api.get("/budgets").then(({data:{allBudgets}})=>{
+    //console.log(allBudgets,"budgets")
+    return allBudgets
+  })
+}
+export const getBudgetsById =(id)=>{
+  return api.get(`/budgets/${id}`).then(({data:{budget}})=>{
+   console.log(budget,"budgetsById")
+    return budget
+  })
+}
 // export const modifyBudgets =(_id,username,budget,start_date,end_date)=>{
 //   return api.patch(`/budgets/${_id}`,{_id:_id,budget:budget,username:username,start_date:start_date,end_date:end_date}).then(({data:{data}})=>{
 //   console.log(data,"data")
@@ -74,11 +89,13 @@ export const getColours =()=>{
 
 getExpenses()
 getCategories()
+//getCategoryById("")
 getUsers()
-// getBudgets()
+getUserById("68023d7b0f29a6af39654cf9")
+getBudgets()
 // getBudgetsById()
 //modifyBudgets("68023d7b0f29a6af39654cff","123James",3000,"2024-03-01","2024-03-31")
 getColours()
-//getBudgetsByUser()
+getBudgetsByUser("123James")
 getExpensesByCategoryId("68023d7a0f29a6af39654cef")
 getExpensesByBudgetIdCategoryId("68023d7b0f29a6af39654cfe","68023d7a0f29a6af39654cef")
