@@ -1,10 +1,10 @@
-@import './base.css';
-@import 'tailwindcss';
+@import "./base.css";
+@import "tailwindcss";
 
-body, #app {
-    font-family: 'Nunito', sans-serif;
+body,
+#app {
+  font-family: "Nunito", sans-serif;
 }
-
 
 #app {
   max-width: 1280px;
@@ -13,12 +13,11 @@ body, #app {
   padding-right: 1rem;
   font-weight: normal;
   position: relative;
-
 }
 
 header {
   font-size: 3rem;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   text-align: center;
 }
 a,
@@ -36,7 +35,6 @@ a,
 }
 
 @media (min-width: 1024px) {
-
 }
 
 .opt-mes {
@@ -44,10 +42,10 @@ a,
 }
 
 .budget {
-z-index: 100;
-position: absolute;
-top: 26%;
-left: 38%;
+  z-index: 100;
+  position: absolute;
+  top: 26%;
+  left: 38%;
 }
 
 .budget-block {
@@ -59,7 +57,6 @@ left: 38%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
   margin-top: 2rem;
 }
 
@@ -74,6 +71,7 @@ left: 38%;
   transition: background-color 0.3s ease, transform 0.2s ease;
   font-size: 1rem;
   cursor: pointer;
+  margin-inline: 2rem;
 }
 
 .home-page-button:hover {
@@ -93,9 +91,13 @@ left: 38%;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
-  background-color: #1a010133;
+  background-color: whitesmoke;
   position: relative;
   margin-top: 2rem;
+}
+
+.theme-dark .form-scroll-container {
+  background-color: #1a010133;
 }
 
 .form {
@@ -115,38 +117,38 @@ left: 38%;
 
 .custom-input {
   display: block;
-  padding-top: 0.625rem; 
+  padding-top: 0.625rem;
   padding-bottom: 0.625rem;
   padding-left: 0;
   padding-right: 0;
   width: 100%;
-  font-size: 0.875rem; 
-  color: #ffffff;       
+  font-size: 0.875rem;
+  color: #111827;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #d1d5db;
+  border-bottom: 2px solid #374151;
   appearance: none;
   outline: none;
 }
 
 .custom-input:focus {
-  border-bottom-color: #2563eb; 
+  border-bottom-color: #86d021;
   box-shadow: none;
 }
 
-.dark .custom-input {
-  color: #ffffff;          
-  border-bottom-color: #4b5563; 
+.theme-dark .custom-input {
+  color: #ffffff;
+  border-bottom-color: #4b5563;
 }
 
-.dark .custom-input:focus {
-  border-bottom-color: #3b82f6; 
+.theme-dark .custom-input:focus {
+  border-bottom-color: #86d021;
 }
 
 .custom-label {
   position: absolute;
-  font-size: 0.875rem; 
-  color: #6b7280; 
+  font-size: 0.875rem;
+  color: #374151;
   top: 0.75rem;
   left: 0;
   z-index: -10;
@@ -159,16 +161,16 @@ left: 38%;
 .custom-input:not(:placeholder-shown) ~ .custom-label {
   font-weight: 500;
   transform: scale(0.75) translateY(-1.5rem);
-  color: #2563eb;
+  color: #86d021;
 }
 
-.dark .custom-label {
-  color: #9ca3af; 
+.theme-dark .custom-label {
+  color: #9ca3af;
 }
 
-.dark .custom-input:focus ~ .custom-label,
-.dark .custom-input:not(:placeholder-shown) ~ .custom-label {
-  color: #3b82f6;
+.theme-dark .custom-input:focus ~ .custom-label,
+.theme-dark .custom-input:not(:placeholder-shown) ~ .custom-label {
+  color: #86d021;
 }
 
 .header {
@@ -178,57 +180,54 @@ left: 38%;
   padding: 1rem;
 }
 
-.header-button{
+.header-button {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-
-
-
-.addCategoryCard{
+.addCategoryCard {
   display: grid;
   grid-template-columns: 2fr 1.5fr 0.7fr;
   margin-top: 1%;
   text-align: center;
   padding-top: 0.8em;
   padding-bottom: 0.8em;
-  border-radius:10px 10px 10px 10px;
-  font-size:large;
-  width:80%;
-  margin-bottom:1%;
+  border-radius: 10px 10px 10px 10px;
+  font-size: large;
+  width: 80%;
+  margin-bottom: 1%;
   margin-left: auto;
   margin-right: auto;
-  font-weight:bolder
+  font-weight: bolder;
 }
-.addCategoryButton{
+.addCategoryButton {
   display: grid;
-  
+
   margin-top: 1%;
   text-align: center;
   padding-top: 0.8em;
   padding-bottom: 0.8em;
-  border-radius:10px 10px 10px;
-  font-size:large;
-  width:5rem;
-  margin-bottom:1%;
+  border-radius: 10px 10px 10px;
+  font-size: large;
+  width: 5rem;
+  margin-bottom: 1%;
   margin-left: auto;
   margin-right: auto;
-  font-weight:bolder
+  font-weight: bolder;
 }
 
-.expenseCard{
+.expenseCard {
   display: grid;
   grid-template-columns: 2fr 1.5fr 0.7fr;
   margin-top: 1%;
   text-align: center;
   padding-top: 0.8em;
   padding-bottom: 0.8em;
-  border-radius:40px 10px 40px 10px;
+  border-radius: 40px 10px 40px 10px;
   font-size: large;
 }
-.categoryCard{
+.categoryCard {
   margin-left: auto;
   margin-right: auto;
   display: grid;
@@ -237,14 +236,14 @@ left: 38%;
   text-align: center;
   padding-top: 0.8em;
   padding-bottom: 0.8em;
-  border-radius:10px 10px 10px;
+  border-radius: 10px 10px 10px;
   font-size: large;
 }
-.categoryList{
-  width:100%
+.categoryList {
+  width: 100%;
 }
 
-#pieChartDiv{
+#pieChartDiv {
   position: relative;
   top: 0px;
 }

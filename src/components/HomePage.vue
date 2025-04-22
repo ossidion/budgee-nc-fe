@@ -64,7 +64,7 @@
 
 <template>
     <div>
-    <br><br/>
+
     <section>
         <div class="home-page-buttons">
     
