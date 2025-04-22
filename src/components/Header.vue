@@ -1,40 +1,11 @@
 <script setup>
 
-import { ref, onMounted } from 'vue';
-
-const darkMode = ref(false);
-
-function toggleTheme() {
-  darkMode.value = !darkMode.value;
-  if (darkMode.value) {
-    document.body.classList.add('dark');
-  } else {
-    document.body.classList.remove('dark');
-  }
-  localStorage.setItem('darkMode', darkMode.value);
-}
-
-onMounted(() => {
-  const savedMode = localStorage.getItem('darkMode');
-  if (savedMode === 'true') {
-    darkMode.value = true;
-    document.body.classList.add('dark');
-  }
-});
+import ThemeToggle from "@/components/ThemeToggle.vue";
 </script>
 
 <template>
-
-<div>
-
-
-
-      <button @click="toggleTheme"
-        class="header-button p-3 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
-        {{ darkMode ? 'Light Mode' : 'Dark Mode' }}
-      </button>
-  
-
+  <div>
+    <ThemeToggle />
 
     <header>
       <div class="app-header">
@@ -45,13 +16,10 @@ onMounted(() => {
         <h1>Budgee</h1>
       </div>
     </header>
-
-
   </div>
 </template>
 
 <style scoped>
-
 .header {
   padding: 1.5rem 2rem;
   border-radius: 0.75rem;
@@ -102,5 +70,4 @@ onMounted(() => {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 </style>
-
 
