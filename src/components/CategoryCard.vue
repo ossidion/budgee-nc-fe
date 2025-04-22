@@ -2,8 +2,11 @@
 import { changeHSL, shadeColor } from '@/utils/chartData'
 import { reactive } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter';
+import { toRef } from 'vue'
 
 // declare the props 
+
 const {name, amount, percentage, hex_code} = defineProps({
   id:Number,
   name: String,
@@ -13,8 +16,7 @@ const {name, amount, percentage, hex_code} = defineProps({
 
 })
 
-// Intl.NumberFormat is a built-in JavaScript object 
-// which formats numbers according to a specific locale and style
+
 const formatter = new Intl.NumberFormat("en-GB", {
   style: 'currency',
   currency: "GBP"
@@ -30,6 +32,12 @@ const styleObject = reactive({
 })
 
 const formattedAmount = formatter.format(amount)
+
+  const amountRef = toRef(props,'amount')
+  const currencyRef = toRef(props,'currency')
+  const localeRef = toRef(props,'locale')
+  
+  const formattedAmount = useCurrencyFormatter(amountRef,currencyRef,localeRef)
 
 </script>
 
