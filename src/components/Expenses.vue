@@ -1,16 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import CategoryList from './CategoryList.vue'
+import { expenseStore } from './assets/stores/categoriesStore'
 import { useStore } from './assets/stores/currentBudgetData'
-import Nav from './Nav.vue'
-
 
 
 let budgetStore = useStore()
 
-
-
-const categories = budgetStore.getCategories
 
 const newCategoryName = ref('')
 const isAdding = ref(false)
@@ -30,8 +26,37 @@ function confirmAddCategory(){
     })
     newCategoryName.value = ''
     isAdding.value = false
-  }
+ }}
+
+const selectedCurrency = ref(0)
+
+const currencyLocales = {
+  GBP: 'en-GB',
+  USD: 'en-US',
+  EUR: 'de-DE',
+  JPY: 'ja-JP',
 }
+
+const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
+// onMounted(async () => {
+//   await myExpenseStore.getCategories()
+//   await myExpenseStore.fetchExpensesFromApi()
+
+//   const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
+//     ...cat,
+//     category_id: cat._id,
+//     expenses: []
+//   }));
+
+//   for (const expense of myExpenseStore.expenses) {
+//     const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
+//     if (cat) {
+//       cat.expenses.push(expense);
+//     }
+
+//   }
+// })
+
 
 </script>
 
@@ -40,7 +65,8 @@ function confirmAddCategory(){
 
     <!-- List -->
     <CategoryList
-      :categories="categories"
+
+      :categories="budgetStore.getCategories"
     />
     <!-- Add category input or button -->
      <div v-if="isAdding">
@@ -52,9 +78,7 @@ function confirmAddCategory(){
 
       <button @click="confirmAddCategory">Save</button>
      </div>
-     <div v-else @click="startAdding">
-      + Add new category
-     </div>
+        
 
     </div>
 </template>

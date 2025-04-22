@@ -1,9 +1,11 @@
 <script setup>
+import { getCategories, getColours, getExpenses, PLACEHOLDER_GET_CURR_BUDGET } from '@/api/requests';
 import PieChart from './PieChart.vue';
 import { useColourStore } from './assets/stores/colourStore';
 
 import { useStore } from './assets/stores/currentBudgetData';
 import { generateCategoryData, generateColorData, generateCurrentBudget, generateExpenseData } from '@/utils/testData';
+
 
 
 
@@ -13,37 +15,41 @@ let colorStore = useColourStore()
 let colorData = [];
 
 
-generateColorData(6)
+getColours()
 .then((colorData)=>{
     colorData = colorData;
     colorStore.$patch({colourPalette:colorData})
-    return generateCurrentBudget()
+    return PLACEHOLDER_GET_CURR_BUDGET()
 })
 .then((budgetData) => {
     budgetStore.$patch({budget:budgetData})
-    return generateCategoryData(5)
+    return getCategories()
 })
 .then((res) => {
     categoryData = res
-    return generateExpenseData(categoryData, 13)
+    return getExpenses()
 })
 .then((expensesData) => {
+    console.log(expensesData)
+    console.log(categoryData)
+    const category_ids = categoryData.map((cat) => cat._id)
 
-    const category_ids = categoryData.map((cat) => cat.category_id)
     categoryData.forEach((cat) => cat.expenses = [])
     
+
     for (let expense of expensesData) {
         const index = category_ids.indexOf(expense.category_id)
         if (index === -1) {
-            return Promise.reject()
+            return Promise.reject({msg:"no cat found"})
         }
 
         categoryData[index].expenses.push(expense)
     }
+    
     budgetStore.$patch({categories:categoryData})
+    
     })
     .then(() => {
-
 
     })
     .catch((err) => {
@@ -73,7 +79,7 @@ generateColorData(6)
 #routedComponent {
 
     overflow: scroll;
-    height: 200px;
+    height: 300px;
     width: 100%;
 
 }
