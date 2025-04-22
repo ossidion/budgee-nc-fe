@@ -5,28 +5,60 @@ const api = axios.create({
 });
 
 
+
 export const getExpenses = () => {
+
   return api.get("/expenses").then(({ data:{allExpenses} }) => {
 
     return allExpenses;
+
   });
 };
+
+export const getExpensesByCategoryId = (category_id) => {
+  return api.get(`/expenses/category/${category_id}`).then(({ data :{expenses}}) => {
+    return expenses;
+  });
+};
+export const getExpensesByBudgetIdCategoryId = (budget_id,category_id) => {
+  return api.get(`/expenses/${budget_id}/${category_id}`).then(({ data :{expenses}}) => {
+    return expenses;
+  });
+};
+export const postExpense=(date,amount,description,category_id,budget_id)=>{
+  return api.post("/expenses",{date:date,amount:amount,description:description,category_id:category_id,budget_id:budget_id}).then(({data:{expenseAdded}})=>{
+   return expenseAdded
+    }
+)}
+
+
 export const getCategories = () => {
   return api.get("/categories").then(({ data: { categories } }) => {
-
     return categories;
   });
 };
+export const postCategory=(name,description,colour_id)=>{
+  return api.post("/categories",{name:name,description:description,colour_id:colour_id}).then(({data:{newCategory}})=>{
+   return newCategory
+    }
+)}
+
+
 export const getUsers =()=>{
   return api.get("/users").then(({data:{users}})=>{
-
     return users
   })
 }
+export const getUserById = (user_id) => {
+  return api.get(`/users/${user_id}`).then(({ data :{user}}) => {
+    return user;
+  });
+};
 export const getBudgetsByUser =(username)=>{
-  return api.get(`/${username}/budgets`).then((data)=>{
 
-    return data
+  return api.get(`/${username}/budgets`).then(({data:{budgetsByUser}})=>{
+    return budgetsByUser
+
   })
 }
 
@@ -35,12 +67,38 @@ export const getBudgets =()=>{
     return allBudgets
   })
 }
+export const getBudgetsById =(id)=>{
+  return api.get(`/budgets/${id}`).then(({data:{budget}})=>{
+    return budget
+  })
+}
+export const postBudget=(budget,start_date,end_date)=>{
+  return api.post("/budgets",{budget:budget,start_date:start_date,end_date:end_date,username:"lisaOliver56"}).then(({data:{newBudget}})=>{
+   console.log(newBudget,"new Budget")
+   return newBudget
+    }
+)}
+export const modifyBudgets =(_id,budget,start_date,end_date)=>{
+  return api.patch(`/budgets/${_id}`,{budget:budget,start_date:start_date,end_date:end_date}).then(({data})=>{
+    return data
+  })
+}
+
 export const getColours =()=>{
   return api.get("/colours").then(({data:{colours}})=>{
-
     return colours
   })
 }
+export const postColour=(name,hex_code)=>{
+  return api.post("/colours",{name:name,hex_code:hex_code}).then(({data:{newColour}})=>{
+   return newColour
+    }
+)}
+
+
+
+
+
 
 export const PLACEHOLDER_GET_CURR_BUDGET= ()=>{
   return getBudgets().then((allBudgets)=>{
@@ -49,12 +107,3 @@ export const PLACEHOLDER_GET_CURR_BUDGET= ()=>{
 }
 
 
-// getExpenses()
-// getCategories()
-// getUsers()
-getBudgets()
-// getColours()
-//getBudgetsByUser('Lunahen78')
-// PLACEHOLDER_GET_CURR_BUDGET().then((budget)=>{
-//   console.log(budget)
-// })
