@@ -24,6 +24,7 @@ export function shadeColor(color, percent) {
 }
 
 function hexToHSL(hex) {
+    if (!hex) return (0,0,0)
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
     let r = parseInt(result[1], 16);

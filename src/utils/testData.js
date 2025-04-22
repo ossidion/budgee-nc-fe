@@ -50,14 +50,14 @@ export function generateCategoryData(no_categories) {
 
 export function generateExpenseData(categoryData, no_expenses) {
     const expenseData = []
-    const cat_ids = categoryData.map((cat) => cat.category_id)
+    const cat_ids = categoryData.map((cat) => cat._id)
 
 
     for (let i = 0; i < no_expenses; i++) {
         expenseData.push({
             expense_id: i,
             budget_id: 1,
-            category_id: cat_ids[Math.floor(Math.random() * cat_ids.length)],
+            _id: cat_ids[Math.floor(Math.random() * cat_ids.length)],
             amount: Math.round((Math.random() * 10000)) / 100,
             description: identName(i * 10001),
             date: new Date(new Date() - Math.random() * 100000000000)

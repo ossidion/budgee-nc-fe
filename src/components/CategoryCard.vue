@@ -7,7 +7,7 @@ import { toRef } from 'vue'
 
 // declare the props 
 
-const {name, amount, percentage, hex_code,currency, locale} = defineProps({
+const {id,name, amount, percentage, hex_code,currency, locale} = defineProps({
   id:String,
   name: String,
   amount: Number,
@@ -16,7 +16,6 @@ const {name, amount, percentage, hex_code,currency, locale} = defineProps({
 
 
 })
-
 
 
 

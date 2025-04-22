@@ -45,7 +45,6 @@ const options = {
 
       const noCats = this._sortedMetasets[0].data.length - 1
 
-      console.log(this._sortedMetasets[0]._dataset,"<<,")
 
 
       if (currPath === "/") {
@@ -53,11 +52,11 @@ const options = {
           router.push(`/expenses`)
       }
       if (currPath.startsWith("/expenses")) {
-        if (currPath === `/expenses/${elements[0].index}`){
+        if (currPath === `/expenses/${this._sortedMetasets[0]._dataset._ids[elements[0].index]}`){
           router.push(`/expenses`)
         }
         else{
-          router.push(`/expenses/${elements[0].index}`)
+          router.push(`/expenses/${this._sortedMetasets[0]._dataset._ids[elements[0].index]}`)
         }
       }
 
@@ -79,13 +78,13 @@ const chartDataUpdated = computed(() => {
     newChartData.datasets[0].borderWidth = Array(noCats).fill(2);
     newChartData.datasets[0].borderWidth.push(2)
 
-    // console.log(newChartData.datasets[0].backgroundColor)
+
 
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
       (index < noCats)
         ? changeHSL(bgColor,{s:100,l:80})
         : bgColor)
-    // console.log(newChartData.datasets[0].backgroundColor)
+  
 
     newChartData.datasets[0].cutouts = Array(noCats).fill(5);
     newChartData.datasets[0].cutouts.push(0)
@@ -106,16 +105,18 @@ const chartDataUpdated = computed(() => {
           backgroundColor: newChartData.datasets[0].backgroundColor.splice(0, noCats),
           data: newChartData.datasets[0].data.splice(0,noCats),
           cutouts: newChartData.datasets[0].cutouts.splice(0, noCats),
-          budgetInfo: newChartData.datasets[0].budgetInfo
+          budgetInfo: newChartData.datasets[0].budgetInfo,
+          _ids: newChartData.datasets[0]._ids
         }
       ]
     }
   }
 
   else {
-    console.log("yes")
+
+
     newChartData.datasets[0].backgroundColor = newChartData.datasets[0].backgroundColor.map((bgColor, index) =>
-      router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == index
+      router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == newChartData.datasets[0]._ids[index]
         ?
         bgColor
         :
@@ -123,7 +124,7 @@ const chartDataUpdated = computed(() => {
     )
     
     newChartData.datasets[0].cutouts = Array(noCats).fill(0).map((bgColor, index) =>
-      router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == index
+      router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1) == newChartData.datasets[0]._ids[index]
         ?
         -5
         :
@@ -137,7 +138,8 @@ const chartDataUpdated = computed(() => {
           backgroundColor: newChartData.datasets[0].backgroundColor.splice(0, noCats),
           data: newChartData.datasets[0].data.splice(0, noCats),
           cutouts: newChartData.datasets[0].cutouts.splice(0, noCats),
-          budgetInfo: newChartData.datasets[0].budgetInfo
+          budgetInfo: newChartData.datasets[0].budgetInfo,
+          _ids: newChartData.datasets[0]._ids
         }
       ]
     }

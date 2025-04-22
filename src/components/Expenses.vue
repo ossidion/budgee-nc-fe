@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import CategoryList from './CategoryList.vue'
-import { expenseStore } from './assets/stores/categoriesStore'
+
 import { useStore } from './assets/stores/currentBudgetData'
 
 

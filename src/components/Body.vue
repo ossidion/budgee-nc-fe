@@ -30,8 +30,7 @@ getColours()
     return getExpenses()
 })
 .then((expensesData) => {
-    console.log(expensesData)
-    console.log(categoryData)
+
     const category_ids = categoryData.map((cat) => cat._id)
 
     categoryData.forEach((cat) => cat.expenses = [])
@@ -50,7 +49,6 @@ getColours()
     
     })
     .then(() => {
-
     })
     .catch((err) => {
         console.log(err)
@@ -77,9 +75,8 @@ getColours()
 
 }
 #routedComponent {
-
     overflow: scroll;
-    height: 300px;
+    height: 40vh;
     width: 100%;
 
 }

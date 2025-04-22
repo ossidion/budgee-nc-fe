@@ -9,9 +9,15 @@ import CategoryCard from './CategoryCard.vue';
 const router = useRouter()
 let budgetStore = useStore()
 
-const category = computed(()=>budgetStore.getCategories[Number(router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1))])
-const expensesShown = computed(()=>budgetStore.categories[Number(router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1))].expenses)
-console.log(expensesShown.value)
+
+
+
+const category = computed(()=>budgetStore.getCategories.find((cat) => cat._id === router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1)) || {})
+
+
+const expensesShown = computed(()=>(budgetStore.categories.find((cat) => cat._id === router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1)) || {expenses:[]}).expenses)
+
+
 
 
 </script>
@@ -32,7 +38,7 @@ console.log(expensesShown.value)
 
       <div>
 
-        <ExpenseCard v-for="expense in expensesShown" :key="expense._id":expense="expense" :hex_code="category.hex_code"></ExpenseCard>
+        <ExpenseCard v-for="expense in expensesShown" :key="expense._id" :expense="expense" :hex_code="category.hex_code"></ExpenseCard>
       </div>
 
   </div>

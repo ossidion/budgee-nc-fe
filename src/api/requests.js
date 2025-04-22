@@ -7,19 +7,19 @@ const api = axios.create({
 
 export const getExpenses = () => {
   return api.get("/expenses").then(({ data:{allExpenses} }) => {
-    console.log(allExpenses)
+
     return allExpenses;
   });
 };
 export const getCategories = () => {
   return api.get("/categories").then(({ data: { categories } }) => {
-    console.log(categories, "Categories")
+
     return categories;
   });
 };
 export const getUsers =()=>{
   return api.get("/users").then(({data:{users}})=>{
-   console.log(users,"users")
+
     return users
   })
 }
@@ -37,7 +37,7 @@ export const getBudgets =()=>{
 }
 export const getColours =()=>{
   return api.get("/colours").then(({data:{colours}})=>{
-   console.log(colours,"colours")
+
     return colours
   })
 }
