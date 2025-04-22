@@ -7,22 +7,19 @@ import { toRef } from 'vue'
 
 // declare the props 
 
-const {name, amount, percentage, hex_code} = defineProps({
+const {name, amount, percentage, hex_code,currency, locale} = defineProps({
   id:Number,
   name: String,
   amount: Number,
   percentage: Number,
   hex_code:String,
 
+
 })
 
 
-const formatter = new Intl.NumberFormat("en-GB", {
-  style: 'currency',
-  currency: "GBP"
-})
 
-console.log(hex_code)
+
 const styleObject = reactive({
   color: changeHSL(hex_code,{s:100,l:30}),
   backgroundColor: changeHSL(hex_code,{s:100,l:80}),
@@ -31,13 +28,10 @@ const styleObject = reactive({
   "border-width" :"2px",
 })
 
-const formattedAmount = formatter.format(amount)
 
-  const amountRef = toRef(props,'amount')
-  const currencyRef = toRef(props,'currency')
-  const localeRef = toRef(props,'locale')
+
   
-  const formattedAmount = useCurrencyFormatter(amountRef,currencyRef,localeRef)
+  const formattedAmount = useCurrencyFormatter(amount,currency,locale)
 
 </script>
 
