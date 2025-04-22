@@ -67,16 +67,16 @@ export const getBudgets =()=>{
 }
 export const getBudgetsById =(id)=>{
   return api.get(`/budgets/${id}`).then(({data:{budget}})=>{
-   console.log(budget,"budgetsById")
+  // console.log(budget,"budgetsById")
     return budget
   })
 }
-// export const modifyBudgets =(_id,username,budget,start_date,end_date)=>{
-//   return api.patch(`/budgets/${_id}`,{_id:_id,budget:budget,username:username,start_date:start_date,end_date:end_date}).then(({data:{data}})=>{
-//   console.log(data,"data")
-//     return data
-//   })
-// }
+export const modifyBudgets =(_id,budget,start_date,end_date)=>{
+  return api.patch(`/budgets/${_id}`,{budget:budget,start_date:start_date,end_date:end_date}).then(({data})=>{
+  //console.log(data,"data")
+    return data
+  })
+}
 
 export const getColours =()=>{
   return api.get("/colours").then(({data:{colours}})=>{
@@ -88,14 +88,17 @@ export const getColours =()=>{
 
 
 getExpenses()
+getExpensesByCategoryId("68023d7a0f29a6af39654cef")
+getExpensesByBudgetIdCategoryId("68023d7b0f29a6af39654cfe","68023d7a0f29a6af39654cef")
 getCategories()
 //getCategoryById("")
 getUsers()
 getUserById("68023d7b0f29a6af39654cf9")
 getBudgets()
-// getBudgetsById()
-//modifyBudgets("68023d7b0f29a6af39654cff","123James",3000,"2024-03-01","2024-03-31")
-getColours()
+getBudgetsById("68023d7b0f29a6af39654d00")
+modifyBudgets("68023d7b0f29a6af39654cff","2024-04-31","2024-05-29")
 getBudgetsByUser("123James")
-getExpensesByCategoryId("68023d7a0f29a6af39654cef")
-getExpensesByBudgetIdCategoryId("68023d7b0f29a6af39654cfe","68023d7a0f29a6af39654cef")
+getColours()
+
+
+
