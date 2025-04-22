@@ -36,7 +36,7 @@ export const getCategories = () => {
     return categories;
   });
 };
-export const postCategory=(name,description,colour_id)=>{
+export const postCategory=(name,description , colour_id)=>{
   return api.post("/categories",{name:name,description:description,colour_id:colour_id}).then(({data:{newCategory}})=>{
    return newCategory
     }
