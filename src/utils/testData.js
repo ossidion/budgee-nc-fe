@@ -1,3 +1,5 @@
+import { hslToHex } from "./chartData";
+
 const charCode = 'a'.charCodeAt(0);
 
 var identName = function (a) {
@@ -38,7 +40,7 @@ export function generateCategoryData(no_categories) {
         categoryData.push({
             category_id: i,
             name: identName(i),
-            colour_id: Math.round(Math.random() * 1000),
+            colour_id: i,
             description: identName(i * 1000)
         })
     }
@@ -69,13 +71,14 @@ export function generateColorData(no_colors) {
     const colorData = []
 
     for (let i = 0; i < no_colors; i++) {
+
         colorData.push({
             id: i,
-            hex_code: '#' + '0'.repeat(6 - (Math.floor(i / no_colors * 16 ** 6).toString(16)).length) + (Math.floor(i / no_colors * 16 ** 6).toString(16)),
+            hex_code: hslToHex(Math.round(i*360/no_colors),100,50),
             name: identName(i * 10001),
         })
     }
     return Promise.resolve(colorData)
 }
 
-console.log(generateColorData(25))
+

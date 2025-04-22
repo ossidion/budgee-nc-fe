@@ -2,12 +2,33 @@
 import { ref, computed, onMounted } from 'vue'
 import CategoryList from './CategoryList.vue'
 import { expenseStore } from './assets/stores/categoriesStore'
+import { useStore } from './assets/stores/currentBudgetData'
 
-const myExpenseStore = expenseStore();
 
-const selectedCurrency = ref('GBP')
+let budgetStore = useStore()
+
+
 const newCategoryName = ref('')
 const isAdding = ref(false)
+
+
+function startAdding(){
+  isAdding.value = true
+  newCategoryName.value = ''
+}
+
+function confirmAddCategory(){
+  if(newCategoryName.value.trim()){
+    categories.value.push({
+      name: newCategoryName.value.trim(),
+      amount: 0,
+      percentage: 0,
+    })
+    newCategoryName.value = ''
+    isAdding.value = false
+ }}
+
+const selectedCurrency = ref(0)
 
 const currencyLocales = {
   GBP: 'en-GB',
@@ -17,44 +38,35 @@ const currencyLocales = {
 }
 
 const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
-onMounted(async () => {
-  await myExpenseStore.getCategories()
-  await myExpenseStore.fetchExpensesFromApi()
+// onMounted(async () => {
+//   await myExpenseStore.getCategories()
+//   await myExpenseStore.fetchExpensesFromApi()
 
-  const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
-    ...cat,
-    category_id: cat._id,
-    expenses: []
-  }));
+//   const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
+//     ...cat,
+//     category_id: cat._id,
+//     expenses: []
+//   }));
 
-  for (const expense of myExpenseStore.expenses) {
-    const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
-    if (cat) {
-      cat.expenses.push(expense);
-    }
-  }
-})
+//   for (const expense of myExpenseStore.expenses) {
+//     const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
+//     if (cat) {
+//       cat.expenses.push(expense);
+//     }
+
+//   }
+// })
 
 
 </script>
 
 <template>
-    <p> Expenses </p>
-     <!-- Currency dropdown -->
     <div>
-      <label for="currency">Currency</label>
-      <select id="currency" v-model="selectedCurrency">
-        <option value="GBP">GBP (£)</option>
-        <option value="USD">USD ($)</option>
-        <option value="EUR">EUR (€)</option>
-        <option value="JPY">JPY (¥)</option>
-      </select>
-    </div>
+
     <!-- List -->
     <CategoryList
-      :categories="myExpenseStore.categories"
-      :currency="selectedCurrency"
-      :locale="selectedLocale"
+
+      :categories="budgetStore.getCategories"
     />
     <!-- Add category input or button -->
      <div v-if="isAdding">
@@ -68,6 +80,7 @@ onMounted(async () => {
      </div>
         
 
+    </div>
 </template>
 
 <style scoped></style>

@@ -7,8 +7,11 @@ const api = axios.create({
 
 
 export const getExpenses = () => {
-  return api.get("/expenses").then(({ data }) => {
-    return data;
+
+  return api.get("/expenses").then(({ data:{allExpenses} }) => {
+    console.log(allExpenses)
+    return allExpenses;
+
   });
 };
 
@@ -52,8 +55,10 @@ export const getUserById = (user_id) => {
   });
 };
 export const getBudgetsByUser =(username)=>{
+
   return api.get(`/${username}/budgets`).then(({data:{budgetsByUser}})=>{
     return budgetsByUser
+
   })
 }
 
@@ -94,5 +99,11 @@ export const postColour=(name,hex_code)=>{
 
 
 
+
+export const PLACEHOLDER_GET_CURR_BUDGET= ()=>{
+  return getBudgets().then((allBudgets)=>{
+    return allBudgets.at(-1)
+  })
+}
 
 

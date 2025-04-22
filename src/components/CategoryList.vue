@@ -20,13 +20,15 @@ defineProps({
 
 
 <template>
-    <div>
+    <div class="categoryList">
         <CategoryCard
         v-for="(category, index) in categories"
         :key="index"
+        :id="category.category_id"
         :name="category.name"
         :amount="category.amount"
         :percentage="category.percentage"
+        :hex_code="category.hex_code"
         :currency="currency"
         :locale="locale"
         />

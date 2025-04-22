@@ -1,37 +1,65 @@
 <script setup>
-// declare the props 
+import { changeHSL, shadeColor } from '@/utils/chartData'
+import { reactive } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter';
 import { toRef } from 'vue'
 
-const props=  defineProps({
+// declare the props 
+
+const {name, amount, percentage, hex_code,currency, locale} = defineProps({
+  id:String,
   name: String,
   amount: Number,
   percentage: Number,
-  currency: {
-    type: String,
-    default: 'GBP',
-  },
-  locale: {
-    type: String,
-    default: 'en-GB',
-  }
+  hex_code:String,
+
+
 })
 
-// Intl.NumberFormat is a built-in JavaScript object 
-// which formats numbers according to a specific locale and style
-  const amountRef = toRef(props,'amount')
-  const currencyRef = toRef(props,'currency')
-  const localeRef = toRef(props,'locale')
+
+
+
+const styleObject = reactive({
+  color: changeHSL(hex_code,{s:100,l:30}),
+  backgroundColor: changeHSL(hex_code,{s:100,l:80}),
+  "border-style": "solid",
+  "border-color":changeHSL(hex_code,{s:100,l:30}),
+  "border-width" :"2px",
+})
+
+const styleObjectDark = reactive({
+  backGround: changeHSL(hex_code,{s:100,l:30}),
+  color: changeHSL(hex_code,{s:100,l:80}),
+  "border-style": "solid",
+  "border-color":changeHSL(hex_code,{s:100,l:80}),
+  "border-width" :"2px",
+})
+
+
+
   
-  const formattedAmount = useCurrencyFormatter(amountRef,currencyRef,localeRef)
+  const formattedAmount = useCurrencyFormatter(amount,currency,locale)
+
 </script>
 
 <template>
-    <div>
-        <div>
-            <span>{{ name }}</span>
-            <span>{{ percentage }}%</span>
-        </div>
-        <span>{{ formattedAmount }}</span>
-    </div>
+    <RouterLink :to="/expenses/+id" class="categoryCard" :style="styleObject">
+
+    
+      <p class="category-card-name">{{ name }}</p>
+      
+      <p>{{ formattedAmount }}</p>
+      <div >
+        <p class="category-card-percentage" >{{ percentage }}%</p>
+      </div>
+
+  </RouterLink>
 </template>
+
+
+<style scoped>
+
+
+
+</style>
