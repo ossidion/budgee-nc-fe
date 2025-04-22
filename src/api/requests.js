@@ -17,6 +17,38 @@ export const getCategories = () => {
     return categories;
   });
 };
+export const getUsers =()=>{
+  return api.get("/users").then(({data:{users}})=>{
+   console.log(users,"users")
+    return users
+  })
+}
+export const getBudgetsByUser =(username)=>{
+  return api.get(`/${username}/budgets`).then((data)=>{
+    console.log(budgetsByUser,"budgetsByUser")
+    console.log(data,"data")
+
+    return data
+  })
+}
+
+export const getBudgets =()=>{
+  return api.get("/budgets").then(({data:{allBudgets}})=>{
+    console.log(allBudgets,"budgets")
+    return allBudgets
+  })
+}
+export const getColours =()=>{
+  return api.get("/colours").then(({data:{colours}})=>{
+   console.log(colours,"colours")
+    return colours
+  })
+}
+
 
 getExpenses()
 getCategories()
+getUsers()
+getBudgets()
+getColours()
+getBudgetsByUser()
