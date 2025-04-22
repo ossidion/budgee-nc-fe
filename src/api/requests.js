@@ -6,9 +6,9 @@ const api = axios.create({
 
 
 export const getExpenses = () => {
-  return api.get("/expenses").then(({ data }) => {
-    console.log(data, "Expenses")
-    return data;
+  return api.get("/expenses").then(({ data:{allExpenses} }) => {
+    console.log(allExpenses)
+    return allExpenses;
   });
 };
 export const getCategories = () => {
@@ -52,9 +52,9 @@ export const PLACEHOLDER_GET_CURR_BUDGET= ()=>{
 // getExpenses()
 // getCategories()
 // getUsers()
-// getBudgets()
+getBudgets()
 // getColours()
 //getBudgetsByUser('Lunahen78')
-PLACEHOLDER_GET_CURR_BUDGET().then((budget)=>{
-  console.log(budget)
-})
+// PLACEHOLDER_GET_CURR_BUDGET().then((budget)=>{
+//   console.log(budget)
+// })

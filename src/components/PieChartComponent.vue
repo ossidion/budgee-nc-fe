@@ -6,6 +6,7 @@ import { changeHSL, shadeColor } from '@/utils/chartData';
 import { useRouter } from 'vue-router';
 import CustomChart from './assets/stores/CustomChart.vue';
 
+
 const router = useRouter();
 
 
@@ -43,6 +44,9 @@ const options = {
       const currPath = router.currentRoute._rawValue.fullPath;
 
       const noCats = this._sortedMetasets[0].data.length - 1
+
+      console.log(this._sortedMetasets[0]._dataset,"<<,")
+
 
       if (currPath === "/") {
         if (elements[0].index !== noCats)

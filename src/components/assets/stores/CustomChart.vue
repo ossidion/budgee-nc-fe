@@ -35,12 +35,6 @@ import {createTypedChart} from "vue-chartjs";
 
 
 
-import { Chart, DoughnutController } from 'chart.js'
-
-
-
-import { createTypedChart } from 'vue-chartjs'
-
 
 
 class Custom extends DoughnutController{

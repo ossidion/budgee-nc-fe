@@ -8,7 +8,7 @@ import { toRef } from 'vue'
 // declare the props 
 
 const {name, amount, percentage, hex_code,currency, locale} = defineProps({
-  id:Number,
+  id:String,
   name: String,
   amount: Number,
   percentage: Number,
@@ -25,6 +25,14 @@ const styleObject = reactive({
   backgroundColor: changeHSL(hex_code,{s:100,l:80}),
   "border-style": "solid",
   "border-color":changeHSL(hex_code,{s:100,l:30}),
+  "border-width" :"2px",
+})
+
+const styleObjectDark = reactive({
+  backGround: changeHSL(hex_code,{s:100,l:30}),
+  color: changeHSL(hex_code,{s:100,l:80}),
+  "border-style": "solid",
+  "border-color":changeHSL(hex_code,{s:100,l:80}),
   "border-width" :"2px",
 })
 

@@ -24,7 +24,9 @@ onMounted(() => {
 </script>
 
 <template>
-      <header class="text-2xl font-bold">Budgee</header>
+
+<div>
+
 
 
       <button @click="toggleTheme"
@@ -44,7 +46,6 @@ onMounted(() => {
       </div>
     </header>
 
-    <button @click="toggle - theme" class="header-button">toggle</button>
 
   </div>
 </template>
