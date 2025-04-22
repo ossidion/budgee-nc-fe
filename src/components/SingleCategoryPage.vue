@@ -15,7 +15,7 @@ let budgetStore = useStore()
 const category = computed(()=>budgetStore.getCategories.find((cat) => cat._id === router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1)) || {})
 
 
-const expensesShown = computed(()=>(budgetStore.categories.find((cat) => cat._id === router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1)) || {expenses:[]}).expenses)
+const expensesShown = computed(()=>(budgetStore.categories.find((cat) => cat._id === router.currentRoute.value.fullPath.match(/\/[^\/]+/g).at(-1).substring(1)) || {expenses:[]}).expenses.sort((a,b)=>new Date(b.date)-new Date(a.date)))
 
 
 
@@ -27,8 +27,10 @@ const expensesShown = computed(()=>(budgetStore.categories.find((cat) => cat._id
   
   <div class="categoryList">
     <CategoryCard
+        class = "catHeader"
         :key="category._id"
         :id="category._id"
+        :confirmed="category.confirmed"
         :name="category.name"
         :amount="category.amount"
         :percentage="category.percentage"
@@ -46,4 +48,7 @@ const expensesShown = computed(()=>(budgetStore.categories.find((cat) => cat._id
 </template>
 
 <style scoped>
+
+
+
 </style>

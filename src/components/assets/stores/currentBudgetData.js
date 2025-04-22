@@ -11,6 +11,10 @@ export const useStore = defineStore("budgetData", {
 
   
   actions: {
+    confirmCategory(tempID){
+      this.categories.find((cat)=>cat._id == tempID).confirmed = true
+      console.log(this.categories)
+    },
     addExpense(amount, categoryId, budgetId = 1, date=new Date(), description = "", expenseId = 0) {
       
       const category = this.categories.find((cat => 
@@ -38,7 +42,9 @@ export const useStore = defineStore("budgetData", {
         colour_id: colourId,
         description,
         expenses: [],
-        name
+        name,
+        confirmed: false,
+        
       }
       
       this.categories.push(newCategory)

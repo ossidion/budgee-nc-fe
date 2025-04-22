@@ -185,7 +185,52 @@ left: 38%;
 }
 
 
+
+
+.addCategoryCard{
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 0.7fr;
+  margin-top: 1%;
+  text-align: center;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  border-radius:10px 10px 10px 10px;
+  font-size:large;
+  width:80%;
+  margin-bottom:1%;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight:bolder
+}
+.addCategoryButton{
+  display: grid;
+  
+  margin-top: 1%;
+  text-align: center;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  border-radius:10px 10px 10px;
+  font-size:large;
+  width:5rem;
+  margin-bottom:1%;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight:bolder
+}
+
+.expenseCard{
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 0.7fr;
+  margin-top: 1%;
+  text-align: center;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  border-radius:40px 10px 40px 10px;
+  font-size: large;
+}
 .categoryCard{
+  margin-left: auto;
+  margin-right: auto;
   display: grid;
   grid-template-columns: 2fr 1.5fr 0.7fr;
   margin-top: 1%;

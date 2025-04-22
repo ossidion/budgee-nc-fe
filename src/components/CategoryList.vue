@@ -8,6 +8,8 @@ const props = defineProps({
     }
 })
 
+
+
 const settingsStore = useSettings()
 
 
@@ -18,9 +20,10 @@ const settingsStore = useSettings()
     <div class="categoryList">
         <CategoryCard
         v-for="(category, index) in categories"
-        :key="index"
+        :key="category._id"
         :id="category._id"
         :name="category.name"
+        :confirmed="category.confirmed"
         :amount="category.amount"
         :percentage="category.percentage"
         :hex_code="category.hex_code"
@@ -28,4 +31,6 @@ const settingsStore = useSettings()
         :locale="settingsStore.locale"
         />
     </div>
+
+    
 </template>
