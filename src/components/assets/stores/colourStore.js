@@ -3,10 +3,7 @@ import { defineStore } from "pinia";
 
 export const useColourStore = defineStore('colour', {
     state: () => ({
-        colourPalette: [
-            '#41B883', '#E46651', '#00D8FF', '#DD1B16', '#DD3B16',
-            '#9B59B6', '#F39C12', '#1ABC9C', '#2ECC71', '#3498DB'
-        ],
+        colourPalette: [],
         selectedColour: null,
         recentColours: [],
         colourError: null,
@@ -20,6 +17,9 @@ export const useColourStore = defineStore('colour', {
         getRandomColour: (state) => {
             const randomIndex = Math.floor(Math.random() * state.colourPalette.length);
             return state.colourPalette[randomIndex]
+        },
+        getHexFromId: (state)=>{
+            return (id) => state.colourPalette.find((col)=> col.id === id).hex_code
         }
     },
 

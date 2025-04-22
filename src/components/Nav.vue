@@ -1,16 +1,26 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <section className="nav">
-    <a className="nav-item" href="/"
-      ><img class="nav-icon" src="../assets/house.jpg"
-    /></a>
-    <a className="nav-item" href="/expenses"
-      ><img class="nav-icon" src="../assets/pie-chart.jpg"
-    /></a>
-    <a className="nav-item" href="/saving-goals"
-      ><img class="nav-icon" src="../assets/fire.jpg"
-    /></a>
+    <RouterLink class="nav-item" to="/"
+      >
+      <img class="nav-icon" src="../assets/house.jpg"
+    />
+  </RouterLink>
+
+      <RouterLink class="nav-item" to="/expenses"
+      >
+      <img class="nav-icon" src="../assets/pie-chart.jpg"
+    />
+  </RouterLink>
+  <RouterLink class="nav-item" to="/saving-goals"
+  >
+
+      <img class="nav-icon" src="../assets/fire.jpg"
+    />
+</RouterLink>
   </section>
 </template>
 
@@ -19,6 +29,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 }
 .nav-item {
   padding: 0.5rem;
@@ -26,6 +37,7 @@
 }
 .nav-icon {
   height: 1.5rem;
+  pointer-events: none;
 }
 </style>
 

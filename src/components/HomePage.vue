@@ -63,6 +63,7 @@
 
 
 <template>
+    <div>
     <br><br/>
     <section>
         <div class="home-page-buttons">
@@ -124,12 +125,7 @@
         <p class="opt-mes">{{ optimisticMessage }}</p>
 
     </section>
-
-    <section>
-        <br><br>
-        <Nav />
-    </section>
-
+</div>
 </template>
 
 <style scoped>

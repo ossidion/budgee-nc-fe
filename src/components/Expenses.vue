@@ -6,11 +6,29 @@ import { expenseStore } from './assets/stores/categoriesStore'
 
 
 
+let budgetStore = useStore()
+
+
 const myExpenseStore = expenseStore();
 
-const selectedCurrency = ref('GBP')
 const newCategoryName = ref('')
 const isAdding = ref(false)
+
+
+function startAdding(){
+  isAdding.value = true
+  newCategoryName.value = ''
+}
+
+function confirmAddCategory(){
+  if(newCategoryName.value.trim()){
+    categories.value.push({
+      name: newCategoryName.value.trim(),
+      amount: 0,
+      percentage: 0,
+    })
+    newCategoryName.value = ''
+    isAdding.value = false
 
 const currencyLocales = {
   GBP: 'en-GB',
@@ -35,6 +53,7 @@ onMounted(async () => {
     if (cat) {
       cat.expenses.push(expense);
     }
+
   }
 })
 
@@ -42,22 +61,16 @@ onMounted(async () => {
 </script>
 
 <template>
-    <p> Expenses </p>
-     <!-- Currency dropdown -->
     <div>
-      <label for="currency">Currency</label>
-      <select id="currency" v-model="selectedCurrency">
-        <option value="GBP">GBP (£)</option>
-        <option value="USD">USD ($)</option>
-        <option value="EUR">EUR (€)</option>
-        <option value="JPY">JPY (¥)</option>
-      </select>
-    </div>
+
     <!-- List -->
     <CategoryList
+
+      :categories="categories"
       :categories="myExpenseStore.categories"
       :currency="selectedCurrency"
       :locale="selectedLocale"
+
     />
     <!-- Add category input or button -->
      <div v-if="isAdding">
@@ -71,10 +84,7 @@ onMounted(async () => {
      </div>
         
 
-     <footer>
-      <Nav></Nav>
-     </footer>
-
+    </div>
 </template>
 
 <style scoped></style>

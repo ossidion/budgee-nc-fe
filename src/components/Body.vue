@@ -6,13 +6,14 @@ import { useStore } from './assets/stores/currentBudgetData';
 import { generateCategoryData, generateColorData, generateCurrentBudget, generateExpenseData } from '@/utils/testData';
 
 
+
 let categoryData = []
 let budgetStore = useStore()
 let colorStore = useColourStore()
 let colorData = [];
 
 
-generateColorData(12)
+generateColorData(6)
 .then((colorData)=>{
     colorData = colorData;
     colorStore.$patch({colourPalette:colorData})
@@ -24,9 +25,10 @@ generateColorData(12)
 })
 .then((res) => {
     categoryData = res
-    return generateExpenseData(categoryData, 10)
+    return generateExpenseData(categoryData, 13)
 })
 .then((expensesData) => {
+
     const category_ids = categoryData.map((cat) => cat.category_id)
     categoryData.forEach((cat) => cat.expenses = [])
     
@@ -39,8 +41,6 @@ generateColorData(12)
         categoryData[index].expenses.push(expense)
     }
     budgetStore.$patch({categories:categoryData})
-
-
     })
     .then(() => {
 
@@ -57,7 +57,8 @@ generateColorData(12)
 <template>
     <div id="bodyDiv">
         <PieChart />
-        <router-view></router-view>
+        <router-view id="routedComponent"></router-view>
+        
     </div>
 </template>
 
@@ -66,7 +67,15 @@ generateColorData(12)
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: relative;
+
+
+}
+#routedComponent {
+
+    overflow: scroll;
+    height: 200px;
+    width: 100%;
+
 }
 
 </style>
