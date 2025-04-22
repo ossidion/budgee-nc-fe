@@ -1,6 +1,10 @@
 @import './base.css';
 @import 'tailwindcss';
 
+body, #app {
+    font-family: 'Nunito', sans-serif;
+}
+
 
 #app {
   max-width: 1280px;
@@ -9,19 +13,18 @@
   padding-right: 1rem;
   font-weight: normal;
   position: relative;
-  font-family: Arial, Helvetica, sans-serif;
-  
 
 }
 
 header {
   font-size: 3rem;
+  font-family: 'Nunito', sans-serif;
   text-align: center;
 }
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: #a3e635;
   transition: 0.4s;
   padding: 3px;
 }
@@ -54,24 +57,33 @@ left: 38%;
 
 .home-page-buttons {
   display: flex;
-  align-items: center;
-  font-size: small;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .home-page-button {
-  margin:1rem;
-  background-color: #0f87f7;
-  color: white;
-  font-weight: bold;
-  padding: 0.5rem;
-  border-radius: calc(infinity * 1px);
-  text-align: center;
-  justify-content: center;
+  background-color: #a3e635;
+  color: #1a1a1a;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .home-page-button:hover {
-  background-color: #0c5eda;
+  background-color: #86d021;
+  transform: translateY(-2px);
+}
 
+.home-page-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .form-scroll-container {
@@ -83,6 +95,7 @@ left: 38%;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
   background-color: #1a010133;
   position: relative;
+  margin-top: 2rem;
 }
 
 .form {
