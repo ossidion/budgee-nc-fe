@@ -67,6 +67,10 @@
   --c-blue-base: #64b5f6;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);
