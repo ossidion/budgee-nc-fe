@@ -9,7 +9,7 @@ const api = axios.create({
 export const getExpenses = () => {
 
   return api.get("/expenses").then(({ data:{allExpenses} }) => {
-    console.log(allExpenses)
+
     return allExpenses;
 
   });

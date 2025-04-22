@@ -1,15 +1,16 @@
 <script setup>
 import { changeHSL, shadeColor } from '@/utils/chartData'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter';
 import { toRef } from 'vue'
 
 // declare the props 
 
-const {name, amount, percentage, hex_code,currency, locale} = defineProps({
+const {id,name, amount, percentage,confirmed, hex_code,currency, locale} = defineProps({
   id:String,
   name: String,
+  confirmed: Boolean,
   amount: Number,
   percentage: Number,
   hex_code:String,
@@ -17,14 +18,31 @@ const {name, amount, percentage, hex_code,currency, locale} = defineProps({
 
 })
 
+const borderRad = computed(()=>{
+  return confirmed ? "10px 10px 10px":"10px 10px 10px 10px"
+})
 
+const bgColor = computed(()=>{
+  return confirmed ? changeHSL(hex_code,{s:100,l:80}) : "#BBBBBB"
+})
+
+const detailsColor = computed(()=>{
+  return confirmed ? changeHSL(hex_code,{s:100,l:30}) : "#000000"
+
+})
+const width = computed(()=>{
+  return confirmed ? "100%" : "80%"
+
+})
 
 
 const styleObject = reactive({
-  color: changeHSL(hex_code,{s:100,l:30}),
-  backgroundColor: changeHSL(hex_code,{s:100,l:80}),
+  width:width,
+  "border-radius": borderRad,
+  color: detailsColor,
+  backgroundColor: bgColor,
   "border-style": "solid",
-  "border-color":changeHSL(hex_code,{s:100,l:30}),
+  "border-color":detailsColor,
   "border-width" :"2px",
 })
 
@@ -35,7 +53,6 @@ const styleObjectDark = reactive({
   "border-color":changeHSL(hex_code,{s:100,l:80}),
   "border-width" :"2px",
 })
-
 
 
   

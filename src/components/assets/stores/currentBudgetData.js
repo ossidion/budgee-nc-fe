@@ -11,10 +11,14 @@ export const useStore = defineStore("budgetData", {
 
   
   actions: {
+    confirmCategory(tempID){
+      this.categories.find((cat)=>cat._id == tempID).confirmed = true
+      console.log(this.categories)
+    },
     addExpense(amount, categoryId, budgetId = 1, date=new Date(), description = "", expenseId = 0) {
       
       const category = this.categories.find((cat => 
-        cat.category_id === categoryId
+        cat._id === categoryId
       ))
 
       if (!category) return false
@@ -22,7 +26,7 @@ export const useStore = defineStore("budgetData", {
       const newExpense = {
         amount,
         budget_id: budgetId,
-        category_id: categoryId,
+        _id: categoryId,
         date,
         description,
         expense_id: expenseId,
@@ -34,11 +38,13 @@ export const useStore = defineStore("budgetData", {
     addCategory(name, description, categoryId=this.categories.length, colourId = 301){
       
       const newCategory = {
-        category_id: categoryId,
+        _id: categoryId,
         colour_id: colourId,
         description,
         expenses: [],
-        name
+        name,
+        confirmed: false,
+        
       }
       
       this.categories.push(newCategory)
@@ -112,7 +118,7 @@ export const useStore = defineStore("budgetData", {
         })),
         datasets: [
           {
-            category_id: state.categories.map((cat)=>cat._id),
+            _ids: state.categories.map((cat)=>cat._id),
             backgroundColor: state.categories.map((cat)=>colorStore.getHexFromId(cat.colour_id)),
             data: (state.categories.map((cat) => {
               return  Math.round(

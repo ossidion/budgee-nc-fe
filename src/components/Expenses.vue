@@ -1,32 +1,43 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, reactive, nextTick } from 'vue'
 import CategoryList from './CategoryList.vue'
-import { expenseStore } from './assets/stores/categoriesStore'
+
 import { useStore } from './assets/stores/currentBudgetData'
+import { changeHSL } from '@/utils/chartData'
+import { useColourStore } from './assets/stores/colourStore'
+import { postCategory } from '@/api/requests'
 
 
 let budgetStore = useStore()
-
+let colorStore = useColourStore()
 
 const newCategoryName = ref('')
+
 const isAdding = ref(false)
 
 
-function startAdding(){
-  isAdding.value = true
-  newCategoryName.value = ''
-}
+
 
 function confirmAddCategory(){
+
   if(newCategoryName.value.trim()){
-    categories.value.push({
-      name: newCategoryName.value.trim(),
-      amount: 0,
-      percentage: 0,
-    })
+    const catName = newCategoryName.value
     newCategoryName.value = ''
     isAdding.value = false
- }}
+    const tempID = String(Math.round(Math.random()*10**10))
+    budgetStore.addCategory(catName.trim(),"",tempID,"6807a6f405a38051dee4978c")
+    console.log(budgetStore.categories)
+    return postCategory(catName.trim(),"--","6807a6f405a38051dee4978c").then((response)=>{
+        budgetStore.confirmCategory(tempID)
+    }).catch((err)=>{
+      console.log(err,"err")
+    })
+ }
+ else{
+  newCategoryName.value = ''
+  isAdding.value = false
+ }
+}
 
 const selectedCurrency = ref(0)
 
@@ -38,25 +49,21 @@ const currencyLocales = {
 }
 
 const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
-// onMounted(async () => {
-//   await myExpenseStore.getCategories()
-//   await myExpenseStore.fetchExpensesFromApi()
 
-//   const categoryWithExpenses = myExpenseStore.categories.map(cat => ({
-//     ...cat,
-//     category_id: cat._id,
-//     expenses: []
-//   }));
+async function startAdding(){
+  isAdding.value = true
+  newCategoryName.value = ''
+  await nextTick();
+  document.getElementById('addCategoryNameInput').focus()
+}
 
-//   for (const expense of myExpenseStore.expenses) {
-//     const cat = categoryWithExpenses.find(singleCat => singleCat._id === expense.category_id);
-//     if (cat) {
-//       cat.expenses.push(expense);
-//     }
-
-//   }
-// })
-
+const styleObject = reactive({
+  color: changeHSL("#000000"),
+  backgroundColor: changeHSL("#BBBBBB"),
+  "border-style": "solid",
+  "border-color": changeHSL("#000000"),
+  "border-width" :"2px",
+})
 
 </script>
 
@@ -68,19 +75,34 @@ const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
 
       :categories="budgetStore.getCategories"
     />
-    <!-- Add category input or button -->
-     <div v-if="isAdding">
+    
+    <button v-if="!isAdding" class="addCategoryButton" :style="styleObject" @click="startAdding">
+     +
+    </button>
+
+    <div v-if="isAdding" class="addCategoryCard" :style="styleObject">
       <input
         v-model="newCategoryName"
         @keyup.enter="confirmAddCategory"
         placeholder="Enter category name"
+        id="addCategoryNameInput"
       />
 
       <button @click="confirmAddCategory">Save</button>
      </div>
-        
 
+
+  
+        
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#addCategoryNameInput{
+  text-align: center;
+  width: 50%;
+  align-items: center;
+  margin: auto;
+  outline:none;
+}
+</style>

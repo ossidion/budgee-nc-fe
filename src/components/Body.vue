@@ -30,11 +30,11 @@ getColours()
     return getExpenses()
 })
 .then((expensesData) => {
-    console.log(expensesData)
-    console.log(categoryData)
+
     const category_ids = categoryData.map((cat) => cat._id)
 
     categoryData.forEach((cat) => cat.expenses = [])
+    categoryData.forEach((cat) => cat.confirmed = true)
     
 
     for (let expense of expensesData) {
@@ -50,12 +50,10 @@ getColours()
     
     })
     .then(() => {
-
     })
     .catch((err) => {
         console.log(err)
     })
-
 
 
 </script>
@@ -63,7 +61,13 @@ getColours()
 <template>
     <div id="bodyDiv">
         <PieChart />
-        <router-view id="routedComponent"></router-view>
+        
+        <router-view v-slot="{Component}" id="routedComponent">
+        <Transition name="slide" mode="out-in">
+            <component :is="Component" :key="$route.path"></component>
+        </Transition>
+        </router-view>
+    
         
     </div>
 </template>
@@ -77,11 +81,23 @@ getColours()
 
 }
 #routedComponent {
-
     overflow: scroll;
-    height: 300px;
+    height: 40vh;
     width: 100%;
 
 }
 
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.3s ease-out;
+  }
+  .slide-enter-from, 
+  .slide-leave-to {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  
+
+ 
 </style>
