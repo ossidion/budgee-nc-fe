@@ -13,15 +13,10 @@ const router = useRouter()
 
 
 
-const chartData = computed(()=>(router.currentRoute.value.fullPath==="/"?budgetStore.getCatPieDataFull:budgetStore.getCatPieData))
+const chartData = computed(()=>(budgetStore.getCatPieDataFull))
 
 
-function handleClick(){
-  console.log(router.currentRoute.value.fullPath==="/")
-  budgetStore.addExpense(100,0)
-  
 
-}
 
 </script>
 
@@ -29,7 +24,6 @@ function handleClick(){
 
   <div id="pieChartDiv">
     <PieChartComponent :chartData="chartData" :periodRatio="budgetStore.getRatioLeftOfPeriod"/>
-    <button @click="handleClick">-----</button>
   </div>
 
 </template>
