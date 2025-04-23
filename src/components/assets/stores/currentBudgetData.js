@@ -4,7 +4,7 @@ import { useColourStore } from "./colourStore";
 export const useStore = defineStore("budgetData", {
   
   state: () => {
-    return { categories: [], budget: {budget_id: 1, budget: 0, interval: {start_date: new Date(), end_date: new Date()}} };
+    return { categories: [], budget: {_id: 1, budget: 0, interval: {start_date: new Date(), end_date: new Date()}} };
   },
   
   actions: {
@@ -24,6 +24,13 @@ export const useStore = defineStore("budgetData", {
     }
 
     },
+    confirmExpense(tempID){
+      for (let cat of this.categories){
+        cat.expenses.forEach((expense)=>console.log(expense._id))
+        console.log((cat.expenses.find((expense)=>expense._id == tempID)|| {}));
+        (cat.expenses.find((expense)=>expense._id == tempID)|| {}).confirmed = true
+      }
+    },
     addExpense(amount, categoryId, budgetId = 1, date=new Date(), description = "", expenseId = 0) {
       
       const category = this.categories.find((cat => 
@@ -35,10 +42,11 @@ export const useStore = defineStore("budgetData", {
       const newExpense = {
         amount,
         budget_id: budgetId,
-        _id: categoryId,
+        category_id: categoryId,
         date,
         description,
-        expense_id: expenseId,
+        _id: expenseId,
+        confirmed: false
       }
 
       category.expenses.push(newExpense)      
@@ -114,7 +122,7 @@ export const useStore = defineStore("budgetData", {
       const getNewPie = structuredClone(this.getCatPieData)
       
       getNewPie.labels.push("Remaining")
-      getNewPie.datasets[0].backgroundColor.push("#008000")
+      getNewPie.datasets[0].backgroundColor.push("#73D622")
       getNewPie.datasets[0].data.push(this.getSpendingLeft)
       getNewPie.datasets[0].budgetInfo = [this.getSpendingLeft,this.budget.budget]
       return getNewPie
