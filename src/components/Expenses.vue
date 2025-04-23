@@ -11,10 +11,9 @@ import ColourPreview from './ColourPreview.vue'
 
 
 let budgetStore = useStore()
-let colorStore = useColourStore()
-let colourId = colorStore.getSelectedColour._id
+let colourStore = useColourStore()
+let colourId = ""
 
-console.log("<<<< this is what we want")
 
 const newCategoryName = ref('')
 
@@ -30,7 +29,7 @@ function confirmAddCategory(){
     newCategoryName.value = ''
     isAdding.value = false
     const tempID = String(Math.round(Math.random()*10**10))
-    budgetStore.addCategory(catName.trim(),"",tempID,"6807a6f405a38051dee4978c")
+    budgetStore.addCategory(catName.trim(),"",tempID, colourId)
     console.log(budgetStore.categories)
 
     return postCategory(catName.trim(),"--", colourId).then((response)=>{
@@ -44,6 +43,14 @@ function confirmAddCategory(){
   isAdding.value = false
  }
 }
+
+function handleColourClick(colour){
+
+colourStore.setSelectedColour(colour)
+console.log(colourStore.getSelectedColour._id, "<<<< this one")
+colourId = colourStore.getSelectedColour._id
+}
+
 
 const selectedCurrency = ref(0)
 
@@ -94,7 +101,23 @@ const styleObject = reactive({
         id="addCategoryNameInput"
       />
 
-      <ColourPreview />
+      <div>
+      <p>Choose Colour</p>
+      <div class="flex flex-wrap gap-2">
+    <div
+      v-for="colour in colourStore.getPalette"
+      :key="colour._id"
+      :title="colour.name"
+      class="w-8 h-8 border border-black rounded cursor-pointer"
+      :style="{ backgroundColor: colour.hex_code }"
+      @click="handleColourClick(colour)"
+    >
+      <div v-if="colourStore.selectedColour?.hex_code === colour.hex_code" class="w-full h-full border-4 border-white rounded-full"></div>
+    </div>
+    
+  </div>
+
+    </div>
       <button @click="confirmAddCategory">Save</button>
 
      </div>
