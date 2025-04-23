@@ -78,9 +78,9 @@ getColours()
 }
 #routedComponent {
   overflow: scroll;
-  height: 50vh;
+  height: 29vh;
   width: 90%;
-  margin-top: -0.5rem;
+  margin-top: -2.2rem;
 }
 
 .slide-enter-active,

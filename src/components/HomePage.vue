@@ -116,8 +116,6 @@
                 </div>
                 <button class="home-page-button" v-on:click="updateTotalBudget(formData.newTotalBudget)">Save</button><br>
 
-                <!-- Update Available Funds -->
-                <br>
             </form>
         </div>
 
