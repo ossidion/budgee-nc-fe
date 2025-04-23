@@ -19,6 +19,7 @@ const colourStore = useColourStore()
       <div v-if="colourStore.selectedColour?.hex_code === colour.hex_code" class="w-full h-full border-4 border-white rounded-full"></div>
       {{  console.log(colour, '<< User Colour!') }}
     </div>
+    
   </div>
 
 
