@@ -5,6 +5,9 @@ import { RouterLink } from 'vue-router'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter';
 import { deleteCategory }  from '@/api/requests'
 
+import { useStore } from '@/components/assets/stores/currentBudgetData'
+
+const store = useStore();
 
 
 
@@ -69,10 +72,9 @@ const deleteButtonStyle = computed(() => ({
   cursor: 'pointer',
 }))
 
+const formattedAmount = useCurrencyFormatter(amount,currency,locale)
 
 
-  
-  const formattedAmount = useCurrencyFormatter(amount,currency,locale)
   async function deleteCat(category_id) {
   try {
     const confirmDelete = confirm('Are you sure you want to delete this category?')
@@ -83,7 +85,7 @@ const deleteButtonStyle = computed(() => ({
     const response = await deleteCategory(category_id)
     console.log(response, 'Deleted successfully')
     alert('Category deleted successfully!')
-    
+    store.deleteCategoryHandler(category_id);
   } catch (err) {
     console.error(err)
     alert('Failed to delete category!')
