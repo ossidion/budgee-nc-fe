@@ -5,6 +5,7 @@
     import { useStore } from './assets/stores/currentBudgetData';
     import { computed } from 'vue';
     import ColourPreview from './ColourPreview.vue';        
+import { modifyBudgets } from '@/api/requests';
 
     let budgetStore = useStore()
 
@@ -31,8 +32,13 @@
     }
     
     const updateTotalBudget = (newTotalBudget) => {
-        budgetStore.changeBudget(Number(newTotalBudget))
+        const newTotalBudget_ = Number(newTotalBudget)
+        budgetStore.changeBudget(newTotalBudget_)
+        
         formData.value.newTotalBudget = ""
+        modifyBudgets(budgetStore.budget._id,newTotalBudget_).then((res)=>{
+            console.log(res)
+        })
         showChangeBudgetForm()
     }
 
