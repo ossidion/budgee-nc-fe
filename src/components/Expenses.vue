@@ -7,7 +7,7 @@ import { changeHSL } from '@/utils/chartData'
 import { useColourStore } from './assets/stores/colourStore'
 import { postCategory } from '@/api/requests'
 import ColourPreview from './ColourPreview.vue'
-
+import "tailwindcss"
 
 
 let budgetStore = useStore()
@@ -15,29 +15,28 @@ let colourStore = useColourStore()
 let colourId = ""
 
 
-const errorMessage = ref('')
+const errorMessage = ref(false)
 const newCategoryName = ref('')
 
 const isAdding = ref(false)
-
-
-
 
 function confirmAddCategory(){
 
 
   if(!newCategoryName._value && !colourId){
     errorMessage.value = "Please enter a new category name and choose a colour"
+
+    console.log(errorMessage,"error message")
   } 
-  if(!newCategoryName._value){
+  else if(!newCategoryName._value){
     errorMessage.value = "Please enter a new category name"
+
   }
-  if(!colourId){
+  else if(!colourId){
     errorMessage.value = "Please choose a colour"
   }
-
-
-  if(newCategoryName.value.trim()){
+  else{
+    if(newCategoryName.value.trim()){
     const catName = newCategoryName.value
     newCategoryName.value = ''
     isAdding.value = false
@@ -46,10 +45,8 @@ function confirmAddCategory(){
     budgetStore.addCategory(catName.trim(),"",tempID, colourId)
 
     console.log(budgetStore.categories)
-
+    errorMessage.value = ""
     return postCategory(catName.trim(),"--", colourId).then((response)=>{
-
-    // return postCategory(catName.trim(),"--","6807a6f405a38051dee4978c").then((response)=>{
 
         budgetStore.confirmCategory(tempID)
     }).catch((err)=>{
@@ -62,16 +59,14 @@ function confirmAddCategory(){
   isAdding.value = false
  }
 }
+  }
 
 function handleColourClick(colour){
-
 
 colourStore.setSelectedColour(colour)
 console.log(colourStore.getSelectedColour._id, "<<<< this one")
 colourId = colourStore.getSelectedColour._id
 }
-
-
 const selectedCurrency = ref(0)
 
 const currencyLocales = {
@@ -82,7 +77,6 @@ const currencyLocales = {
 }
 
 const selectedLocale = computed(() => currencyLocales[selectedCurrency.value])
-
 async function startAdding(){
   isAdding.value = true
   newCategoryName.value = ''
@@ -102,8 +96,6 @@ const styleObject = reactive({
 
 <template>
     <div>
-
-    <!-- List -->
     <CategoryList
 
       :categories="budgetStore.getCategories"
@@ -140,13 +132,14 @@ const styleObject = reactive({
     </div>
       <button @click="confirmAddCategory">Save</button>
 
-     </div>
-     <p v-if="errorMessage" class="text-red-600 bg-red-100 border-red-400 px-4 py-2 rounded mt-2">{{ errorMessage }}</p>
+      </div>
 
-
-
-        
-    </div>
+      <div v-if="errorMessage">
+          <p class="text-[#aa4a44] text-xl md:text-2xl font-bold px-8 py-4 rounded-lg border border-transparent animate-[fadeOut_2s_ease-in-out_forwards] dark-theme:bg-black dark-theme:text-[#8AFF33] dark-theme:shadow-lg dark-theme:border-[#73D622]/30">
+          {{ errorMessage }}
+        </p>
+      </div> 
+      </div>  
 </template>
 
 <style scoped>
