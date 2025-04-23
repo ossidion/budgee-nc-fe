@@ -12,6 +12,9 @@ import ColourPreview from './ColourPreview.vue'
 
 let budgetStore = useStore()
 let colorStore = useColourStore()
+let colourId = colorStore.getSelectedColour._id
+
+console.log("<<<< this is what we want")
 
 const newCategoryName = ref('')
 
@@ -28,7 +31,13 @@ function confirmAddCategory(){
     isAdding.value = false
     const tempID = String(Math.round(Math.random()*10**10))
     budgetStore.addCategory(catName.trim(),"",tempID,"6807a6f405a38051dee4978c")
-    return postCategory(catName.trim(),"--","6807a6f405a38051dee4978c").then((response)=>{
+
+    console.log(budgetStore.categories)
+
+    return postCategory(catName.trim(),"--", colourId).then((response)=>{
+
+    // return postCategory(catName.trim(),"--","6807a6f405a38051dee4978c").then((response)=>{
+
         budgetStore.confirmCategory(tempID)
     }).catch((err)=>{
       console.log(err,"err")
