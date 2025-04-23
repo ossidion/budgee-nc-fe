@@ -6,6 +6,8 @@ import { useStore } from './assets/stores/currentBudgetData'
 import { changeHSL } from '@/utils/chartData'
 import { useColourStore } from './assets/stores/colourStore'
 import { postCategory } from '@/api/requests'
+import ColourPreview from './ColourPreview.vue'
+
 
 
 let budgetStore = useStore()
@@ -26,7 +28,6 @@ function confirmAddCategory(){
     isAdding.value = false
     const tempID = String(Math.round(Math.random()*10**10))
     budgetStore.addCategory(catName.trim(),"",tempID,"6807a6f405a38051dee4978c")
-    console.log(budgetStore.categories)
     return postCategory(catName.trim(),"--","6807a6f405a38051dee4978c").then((response)=>{
         budgetStore.confirmCategory(tempID)
     }).catch((err)=>{
@@ -88,7 +89,9 @@ const styleObject = reactive({
         id="addCategoryNameInput"
       />
 
+      <ColourPreview />
       <button @click="confirmAddCategory">Save</button>
+
      </div>
 
 
@@ -98,11 +101,11 @@ const styleObject = reactive({
 </template>
 
 <style scoped>
-#addCategoryNameInput{
+#addCategoryNameInput {
   text-align: center;
-  width: 50%;
+  width: 80%;
   align-items: center;
   margin: auto;
-  outline:none;
+  outline: none;
 }
 </style>

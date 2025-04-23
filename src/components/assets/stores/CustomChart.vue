@@ -79,7 +79,7 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
           'remaining-budget',
           budgetStore.getSpendingLeft >= 0 ? 'positive' : 'negative',
         ]">
-        left £{{ budgetStore.getSpendingLeft.toFixed(2) }}
+        £{{ budgetStore.getSpendingLeft.toFixed(2) }} left
       </p>
     </div>
   </div>

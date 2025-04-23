@@ -199,7 +199,6 @@ const closeCategoryModal = () => {
                     Select a Category
                   </h3>
                 </div>
-
                 <!-- Modal Body (Categories List) -->
                 <div class="p-4 space-y-2">
                   <div
@@ -221,6 +220,7 @@ const closeCategoryModal = () => {
                       {{ category.name }}
                     </span>
                   </div>
+
                 </div>
 
                 <!-- Modal Footer with Cancel Button -->
