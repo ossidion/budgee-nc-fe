@@ -9,7 +9,6 @@ const { avatar, username, isLoggedIn } = storeToRefs(userStore)
 
 <template>
   <div class="header">
-    <!-- Top row: Toggle + User info -->
     <div class="header-top">
       <div class="theme-toggle">
         <ThemeToggle />
@@ -21,7 +20,6 @@ const { avatar, username, isLoggedIn } = storeToRefs(userStore)
       </div>
     </div>
 
-    <!-- Bottom row: Centered logo + title -->
     <div class="logo-title">
       <img
         src="../assets/budgee-logo.png"
@@ -42,13 +40,10 @@ const { avatar, username, isLoggedIn } = storeToRefs(userStore)
 <style scoped>
 .header {
   padding: 1rem 1.5rem 2rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
   transition: background-color 0.3s ease;
 }
 
-/* Top row: Toggle on left, user on right */
 .header-top {
   display: flex;
   justify-content: space-between;
@@ -56,7 +51,6 @@ const { avatar, username, isLoggedIn } = storeToRefs(userStore)
   margin-bottom: 1rem;
 }
 
-/* Centered logo and title */
 .logo-title {
   display: flex;
   justify-content: center;
@@ -73,7 +67,6 @@ const { avatar, username, isLoggedIn } = storeToRefs(userStore)
   border-radius: 50%;
 }
 
-/* User info styling */
 .user-info {
   display: flex;
   align-items: center;
@@ -95,7 +88,6 @@ const { avatar, username, isLoggedIn } = storeToRefs(userStore)
   color: #555;
 }
 
-/* Responsiveness */
 @media (max-width: 600px) {
 
   .user-avatar {

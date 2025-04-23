@@ -1,7 +1,6 @@
 <script setup>
 
     import { ref } from 'vue'
-    import Nav from './Nav.vue'
     import 'tailwindcss';
     import { useStore } from './assets/stores/currentBudgetData';
     import { computed } from 'vue';
