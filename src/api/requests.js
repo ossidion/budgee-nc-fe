@@ -82,8 +82,8 @@ export const postBudget=(budget,start_date,end_date)=>{
    return newBudget
     }
 )}
-export const modifyBudgets =(_id,budget,start_date,end_date)=>{
-  return api.patch(`/budgets/${_id}`,{budget:budget,start_date:start_date,end_date:end_date}).then(({data})=>{
+export const modifyBudgets =(_id,budget)=>{
+  return api.patch(`/budgets/${_id}`,{budget:budget}).then(({data})=>{
     return data
   })
 }
@@ -111,5 +111,3 @@ export const PLACEHOLDER_GET_CURR_BUDGET= ()=>{
     return allBudgets.at(-1)
   })
 }
-
-
