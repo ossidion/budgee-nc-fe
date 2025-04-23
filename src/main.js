@@ -7,6 +7,7 @@ import HomePage from './components/HomePage.vue';
 import Expenses from './components/Expenses.vue';
 import SingleCategoryPage from './components/SingleCategoryPage.vue';
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 
 const router = createRouter({
@@ -19,9 +20,11 @@ const router = createRouter({
 });
 
 const pinia = createPinia()
-
+pinia.use(piniaPluginPersistedstate);
 const app = createApp(App)
 
 app.use(pinia)
 app.use(router);
 app.mount('#app')
+
+

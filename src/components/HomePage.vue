@@ -1,7 +1,6 @@
 <script setup>
 
     import { ref } from 'vue'
-    import Nav from './Nav.vue'
     import 'tailwindcss';
     import { useStore } from './assets/stores/currentBudgetData';
     import { computed } from 'vue';
@@ -64,7 +63,7 @@
 
 <template>
     <div>
-    <br><br/>
+
     <section>
         <div class="home-page-buttons">
     
@@ -76,7 +75,7 @@
             <!-- Change Budget Button-->
             <button class= "home-page-button" @click="showChangeBudgetForm()">
                 Change budget
-            </button><br><br>
+            </button>
         </div>
 
         <!-- Add Expense Form -->

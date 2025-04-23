@@ -1,35 +1,51 @@
 <script setup>
-import Body from './components/Body.vue';
-import Header from './components/Header.vue';
+import Body from "./components/Body.vue";
+import Header from "./components/Header.vue";
 
-import Nav from './components/Nav.vue';
+import Nav from "./components/Nav.vue";
+
+import {onMounted} from "vue";
+import {useUserStore} from "@/components/assets/stores/userStore";
+
+const userStore = useUserStore();
+
+onMounted(() => {
+  userStore.setUser({
+    _id: "lisa-001",
+    username: "lisaoliver",
+    name: "Lisa Oliver",
+    email: "lisa@example.com",
+    avatar: "https://i.pravatar.cc/150?img=47",
+    preferences: ["currency=GBP"],
+  });
+});
 </script>
 
 <template>
-    <div id="appBody">
-        
+  <div id="appBody">
     <div>
-        <Header />
+      <Header />
     </div>
     <div class="mainContentDiv">
-        
-        <Body />
+      <Body />
     </div>
-    <footer>
-        <Nav></Nav>
+    <footer class="footer">
+      <Nav></Nav>
     </footer>
-</div>
+  </div>
 </template>
 
 <style scoped>
-#appBody{
-    display:grid;
-    grid-template-rows: 1fr 10fr 1fr;
-    height: 100vh
+#appBody {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  overflow: hidden;
 }
 
-#mainContentDiv{
-  display: inline-flex;
-
+.mainContentDiv {
+  overflow: hidden;
 }
 </style>
+
+
