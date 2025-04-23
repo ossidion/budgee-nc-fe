@@ -64,14 +64,15 @@ const styleObject = reactive({
 
 
 <template>
+<RouterLink  :style="styleObject" class="expenseCard">
 
-<div class="expenseCard" :style="styleObject">
 
 
   <p>{{ props.expense.description }}</p>
   <p>{{formattedAmount }}</p>
   <p>{{formattedDate }}</p>
-</div>
+
+</RouterLink>
 
 </template>
 

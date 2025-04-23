@@ -71,7 +71,6 @@ const deleteButtonStyle = computed(() => ({
   cursor: 'pointer',
 }))
 
-const formattedAmount = useCurrencyFormatter(amount,currency,locale)
 
 
   async function deleteCat(category_id) {
