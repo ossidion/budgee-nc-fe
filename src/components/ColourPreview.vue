@@ -2,7 +2,15 @@
 import { useColourStore } from './assets/stores/colourStore';
 
 const colourStore = useColourStore()
+
+function handleColourClick(colour){
+
+  colourStore.setSelectedColour(colour)
+  return colourStore.getSelectedColour._id
+}
+
 </script>
+
 
 <template>
     <div>
@@ -14,10 +22,10 @@ const colourStore = useColourStore()
       :title="colour.name"
       class="w-8 h-8 border border-black rounded cursor-pointer"
       :style="{ backgroundColor: colour.hex_code }"
-      @click="colourStore.setSelectedColour(colour)"
+      @click="handleColourClick(colour)"
     >
       <div v-if="colourStore.selectedColour?.hex_code === colour.hex_code" class="w-full h-full border-4 border-white rounded-full"></div>
-      {{  console.log(colour, '<< User Colour!') }}
+      <!-- {{  console.log(colourStore.setSelectedColour(colour), '<< User Colour!') }} -->
     </div>
     
   </div>
