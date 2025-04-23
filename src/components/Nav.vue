@@ -49,7 +49,7 @@ import { RouterLink } from 'vue-router'
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  border-top: 2px solid #d9f99d;
 
 }
 
@@ -59,7 +59,7 @@ import { RouterLink } from 'vue-router'
   align-items: center;
   background-color: #f5ffe6;
   padding: 0.8rem;
-  margin: 1.2rem;
+  margin-top: 0.8rem;
   margin-inline: 2rem;
   border-radius: 0.5rem;
   border: 2px solid #73d622;
@@ -80,6 +80,7 @@ import { RouterLink } from 'vue-router'
   height: 1.8rem;
   fill: currentColor;
   stroke: currentColor;
+
   pointer-events: none;
 }
 </style>
