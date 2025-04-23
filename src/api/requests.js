@@ -114,11 +114,23 @@ export const postBudget = (budget, start_date, end_date) => {
       return newBudget;
     });
 };
-export const modifyBudgets = (_id, budget) => {
-  return api.patch(`/budgets/${_id}`, {budget: budget}).then(({data}) => {
-    return data;
-  });
+export const modifyBudgets = (_id, newBudgetAmount) => {
+  return api
+    .patch(`/budgets/${_id}`, {
+      budget: newBudgetAmount,
+    })
+    .then(({data}) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error(
+        "Budget update error:",
+        error.response?.data || error.message
+      );
+      throw error;
+    });
 };
+
 export const deleteBudget = (id) => {
   return api.delete(`/budgets/${id}`);
 };
@@ -143,5 +155,6 @@ export const PLACEHOLDER_GET_CURR_BUDGET = () => {
     return allBudgets.at(-1);
   });
 };
+
 
 

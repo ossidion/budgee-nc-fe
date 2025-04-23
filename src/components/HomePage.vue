@@ -3,7 +3,7 @@ import {ref, computed} from "vue";
 import "tailwindcss";
 import {useStore} from "./assets/stores/currentBudgetData";
 import {changeHSL} from "@/utils/chartData";
-import { postExpense } from "@/api/requests";
+import {postExpense, modifyBudgets} from "@/api/requests";
 
 const budgetStore = useStore();
 
@@ -35,10 +35,10 @@ const toggleDropdown = () => {
 };
 
 const selectCategory = (index, item, color) => {
-formData.value.existingCategory = {
+  formData.value.existingCategory = {
     key: budgetStore.categories[index]._id,
     item,
-    color
+    color,
   };
   dropdownOpen.value = false;
 };
@@ -56,12 +56,25 @@ const showExpenseForm = () => {
   formData.value.expenseForm = !formData.value.expenseForm;
 };
 
-const updateTotalBudget = () => {
+const updateTotalBudget = async () => {
   const value = Number(formData.value.newTotalBudget);
   if (!isNaN(value) && value >= 0) {
-    budgetStore.changeBudget(value);
-    formData.value.newTotalBudget = "";
-    showChangeBudgetForm();
+    try {
+      const updatedBudget = await modifyBudgets(budgetStore.budget._id, value);
+
+      budgetStore.changeBudget(value);
+
+      formData.value.newTotalBudget = "";
+      showChangeBudgetForm();
+
+      optimisticMessage.value = `Budget successfully updated to £${value}!`;
+    } catch (error) {
+      console.error(
+        "Failed to update budget:",
+        error.response?.data || error.message
+      );
+      optimisticMessage.value = "Failed to update budget. Please try again.";
+    }
   }
 };
 
@@ -96,7 +109,7 @@ const addNewExpense = async () => {
       formData.value.date,
       cost,
       formData.value.description,
-      categoryId, 
+      categoryId,
       budgetStore.budget._id
     );
 
@@ -113,7 +126,10 @@ const addNewExpense = async () => {
     showExpenseForm();
     formData.value = getInitialData();
   } catch (error) {
-    console.error("Failed to save expense:", error.response?.data || error.message);
+    console.error(
+      "Failed to save expense:",
+      error.response?.data || error.message
+    );
     optimisticMessage.value = "Failed to save expense. Please try again.";
   }
 };
@@ -164,9 +180,7 @@ const closeCategoryModal = () => {
               v-model="formData.description"
               type="text"
               placeholder=" " />
-            <label for="description" class="custom-label"
-              >Description</label
-            >
+            <label for="description" class="custom-label">Description</label>
           </div>
 
           <!-- Date -->
@@ -240,7 +254,6 @@ const closeCategoryModal = () => {
                       {{ category.name }}
                     </span>
                   </div>
-
                 </div>
 
                 <!-- Modal Footer with Cancel Button -->
@@ -276,13 +289,15 @@ const closeCategoryModal = () => {
               type="number"
               min="0"
               step="0.01"
+              required
               placeholder=" " />
             <label class="custom-label">New Total Budget</label>
           </div>
           <button
             type="button"
             class="home-page-button"
-            @click.prevent="updateTotalBudget">
+            @click.prevent="updateTotalBudget"
+            :disabled="!formData.newTotalBudget">
             Save
           </button>
         </form>
