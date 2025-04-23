@@ -3,6 +3,7 @@ import {ref, computed} from "vue";
 import "tailwindcss";
 import {useStore} from "./assets/stores/currentBudgetData";
 import {changeHSL} from "@/utils/chartData";
+import {postExpense, modifyBudgets} from "@/api/requests";
 
 const budgetStore = useStore();
 
@@ -33,9 +34,12 @@ const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value;
 };
 
-const selectCategory = (key, item, color) => {
-  formData.value.existingCategory = {key, item, color};
-  console.log(item, "<<<<<<<<<<<<");
+const selectCategory = (index, item, color) => {
+  formData.value.existingCategory = {
+    key: budgetStore.categories[index]._id,
+    item,
+    color,
+  };
   dropdownOpen.value = false;
 };
 
@@ -52,12 +56,25 @@ const showExpenseForm = () => {
   formData.value.expenseForm = !formData.value.expenseForm;
 };
 
-const updateTotalBudget = () => {
+const updateTotalBudget = async () => {
   const value = Number(formData.value.newTotalBudget);
   if (!isNaN(value) && value >= 0) {
-    budgetStore.changeBudget(value);
-    formData.value.newTotalBudget = "";
-    showChangeBudgetForm();
+    try {
+      const updatedBudget = await modifyBudgets(budgetStore.budget._id, value);
+
+      budgetStore.changeBudget(value);
+
+      formData.value.newTotalBudget = "";
+      showChangeBudgetForm();
+
+      optimisticMessage.value = `Budget successfully updated to £${value}!`;
+    } catch (error) {
+      console.error(
+        "Failed to update budget:",
+        error.response?.data || error.message
+      );
+      optimisticMessage.value = "Failed to update budget. Please try again.";
+    }
   }
 };
 
@@ -65,37 +82,56 @@ const addCategory = (newCategory, categoryColor) => {
   budgetStore.addCategory(newCategory, categoryColor);
 };
 
-const addNewExpense = () => {
+const addNewExpense = async () => {
   const cost = Number(formData.value.costOfExpense);
   if (isNaN(cost) || cost <= 0) return;
 
+  let categoryId;
+  let categoryName;
+
   if (formData.value.newCategory.trim()) {
-    addCategory(
+    const newCategory = await budgetStore.addCategory(
       formData.value.newCategory.trim(),
       formData.value.categoryColor
     );
-    budgetStore.addExpense({
-      amount: cost,
-      categoryIndex: budgetStore.categories.length - 1,
-      description: formData.value.description,
-      date: formData.value.date,
-    });
-    optimisticMessage.value = `£${cost} successfully added to ${formData.value.newCategory.trim()}!`;
+    categoryId = newCategory._id;
+    categoryName = newCategory.name;
   } else if (formData.value.existingCategory) {
-    budgetStore.addExpense({
-      amount: cost,
-      categoryIndex: formData.value.existingCategory.key,
-      description: formData.value.description,
-      date: formData.value.date,
-    });
-    optimisticMessage.value = `£${cost} successfully added to ${formData.value.existingCategory.item}!`;
+    categoryId = formData.value.existingCategory.key;
+    categoryName = formData.value.existingCategory.item;
   } else {
     optimisticMessage.value = "Please select or create a category.";
     return;
   }
 
-  showExpenseForm();
-  formData.value = getInitialData();
+  try {
+    const expenseAdded = await postExpense(
+      formData.value.date,
+      cost,
+      formData.value.description,
+      categoryId,
+      budgetStore.budget._id
+    );
+
+    budgetStore.addExpense(
+      cost,
+      categoryId,
+      budgetStore.budget._id,
+      formData.value.date,
+      formData.value.description,
+      expenseAdded._id
+    );
+
+    optimisticMessage.value = `£${cost} successfully added to ${categoryName}!`;
+    showExpenseForm();
+    formData.value = getInitialData();
+  } catch (error) {
+    console.error(
+      "Failed to save expense:",
+      error.response?.data || error.message
+    );
+    optimisticMessage.value = "Failed to save expense. Please try again.";
+  }
 };
 
 const showCategoryModal = ref(false);
@@ -144,9 +180,7 @@ const closeCategoryModal = () => {
               v-model="formData.description"
               type="text"
               placeholder=" " />
-            <label for="description" class="custom-label"
-              >Description</label
-            >
+            <label for="description" class="custom-label">Description</label>
           </div>
 
           <!-- Date -->
@@ -220,7 +254,6 @@ const closeCategoryModal = () => {
                       {{ category.name }}
                     </span>
                   </div>
-
                 </div>
 
                 <!-- Modal Footer with Cancel Button -->
@@ -256,13 +289,15 @@ const closeCategoryModal = () => {
               type="number"
               min="0"
               step="0.01"
+              required
               placeholder=" " />
             <label class="custom-label">New Total Budget</label>
           </div>
           <button
             type="button"
             class="home-page-button"
-            @click.prevent="updateTotalBudget">
+            @click.prevent="updateTotalBudget"
+            :disabled="!formData.newTotalBudget">
             Save
           </button>
         </form>
