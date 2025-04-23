@@ -15,6 +15,7 @@ let colourStore = useColourStore()
 let colourId = ""
 
 
+const errorMessage = ref('')
 const newCategoryName = ref('')
 
 const isAdding = ref(false)
@@ -23,6 +24,18 @@ const isAdding = ref(false)
 
 
 function confirmAddCategory(){
+
+
+  if(!newCategoryName._value && !colourId){
+    errorMessage.value = "Please enter a new category name and choose a colour"
+  } 
+  if(!newCategoryName._value){
+    errorMessage.value = "Please enter a new category name"
+  }
+  if(!colourId){
+    errorMessage.value = "Please choose a colour"
+  }
+
 
   if(newCategoryName.value.trim()){
     const catName = newCategoryName.value
@@ -41,8 +54,9 @@ function confirmAddCategory(){
         budgetStore.confirmCategory(tempID)
     }).catch((err)=>{
       console.log(err,"err")
+      errorMessage.value = "failed to add category, please try again"
     })
- }
+  }
  else{
   newCategoryName.value = ''
   isAdding.value = false
@@ -51,7 +65,6 @@ function confirmAddCategory(){
 
 function handleColourClick(colour){
 
-       // delete this later 
 
 colourStore.setSelectedColour(colour)
 console.log(colourStore.getSelectedColour._id, "<<<< this one")
@@ -117,7 +130,7 @@ const styleObject = reactive({
       :title="colour.name"
       class="w-8 h-8 border border-black rounded cursor-pointer"
       :style="{ backgroundColor: colour.hex_code }"
-      @click="handleColourClick(colour)"
+      @click.stop.prevent="handleColourClick(colour)"
     >
       <div v-if="colourStore.selectedColour?.hex_code === colour.hex_code" class="w-full h-full border-4 border-white rounded-full"></div>
     </div>
@@ -128,6 +141,7 @@ const styleObject = reactive({
       <button @click="confirmAddCategory">Save</button>
 
      </div>
+     <p v-if="errorMessage" class="text-red-600 bg-red-100 border-red-400 px-4 py-2 rounded mt-2">{{ errorMessage }}</p>
 
 
 
