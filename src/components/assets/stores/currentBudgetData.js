@@ -105,7 +105,7 @@ export const useStore = defineStore("budgetData", {
       const getNewPie = structuredClone(this.getCatPieData)
       
       getNewPie.labels.push("Remaining")
-      getNewPie.datasets[0].backgroundColor.push("#008000")
+      getNewPie.datasets[0].backgroundColor.push("#73d622");
       getNewPie.datasets[0].data.push(this.getSpendingLeft)
       getNewPie.datasets[0].budgetInfo = [this.getSpendingLeft,this.budget.budget]
       return getNewPie
@@ -142,3 +142,4 @@ export const useStore = defineStore("budgetData", {
     }
   },
 });
+

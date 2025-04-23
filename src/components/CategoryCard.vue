@@ -5,8 +5,6 @@ import { RouterLink } from 'vue-router'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter';
 import { toRef } from 'vue'
 
-// declare the props 
-
 const {id,name, amount, percentage,confirmed, hex_code,currency, locale} = defineProps({
   id:String,
   name: String,

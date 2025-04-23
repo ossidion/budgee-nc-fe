@@ -55,7 +55,9 @@ const moonIcon = `
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Inverts the dark calendar icon to white */
+}
 
 .icon-wrapper {
   display: flex;
