@@ -112,17 +112,14 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
   text-align: center;
   z-index: 10;
   font-weight: bold;
-
   font-size: 0.8rem;
   pointer-events: none;
 }
 
 .initial-budget {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.25rem;
-
-  font-size: 0.7rem;
   pointer-events: none; 
 
 }

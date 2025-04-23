@@ -6,14 +6,23 @@ export const useStore = defineStore("budgetData", {
   state: () => {
     return { categories: [], budget: {_id: 1, budget: 0, interval: {start_date: new Date(), end_date: new Date()}} };
   },
-  // could also be defined as
-  //  state: () => ({ count: 0 })
-
   
   actions: {
     confirmCategory(tempID){
       this.categories.find((cat)=>cat._id == tempID).confirmed = true
       console.log(this.categories)
+
+    },
+    deleteCategoryHandler(category_id){ 
+    for(let i = 0 ;i<this.categories.length;i++){
+      console.log(this.categories[i])
+      if(this.categories[i]._id=== category_id){
+        this.categories.splice(i,1)
+
+      }
+      
+    }
+
     },
     confirmExpense(tempID){
       for (let cat of this.categories){

@@ -1,7 +1,6 @@
 <script setup>
 
     import { ref } from 'vue'
-    import Nav from './Nav.vue'
     import 'tailwindcss';
     import { useStore } from './assets/stores/currentBudgetData';
     import { computed } from 'vue';
@@ -64,7 +63,7 @@
 
 <template>
     <div>
-    <br><br/>
+
     <section>
         <div class="home-page-buttons">
     
@@ -76,7 +75,7 @@
             <!-- Change Budget Button-->
             <button class= "home-page-button" @click="showChangeBudgetForm()">
                 Change budget
-            </button><br><br>
+            </button>
         </div>
 
         <!-- Add Expense Form -->
@@ -100,7 +99,6 @@
                 <div class="form-div relative">
                     <input class="custom-input" type="text" name="floting-input" placeholder=" ">
                     <label for="floating-input" class="custom-label">Category Colour</label>
-                    <!-- <ColourPreview/> -->
                 </div>
                 <button class="home-page-button" v-on:click="addNewExpense(formData.existingCategory, formData.costOfExpense, formData.newCategory)">Save</button>
             </form>
@@ -117,8 +115,6 @@
                 </div>
                 <button class="home-page-button" v-on:click="updateTotalBudget(formData.newTotalBudget)">Save</button><br>
 
-                <!-- Update Available Funds -->
-                <br>
             </form>
         </div>
 
