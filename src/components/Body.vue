@@ -38,12 +38,14 @@ getColours()
     
 
     for (let expense of expensesData) {
+        expense.confirmed = true;
         const index = category_ids.indexOf(expense.category_id)
         if (index === -1) {
-            return Promise.reject({msg:"no cat found"})
+            console.warn("no cat found")
         }
-
-        categoryData[index].expenses.push(expense)
+        else{
+            categoryData[index].expenses.push(expense)
+        }
     }
     
     budgetStore.$patch({categories:categoryData})

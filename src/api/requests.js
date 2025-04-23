@@ -26,6 +26,11 @@ export const getExpensesByBudgetIdCategoryId = (budget_id,category_id) => {
   });
 };
 export const postExpense=(date,amount,description,category_id,budget_id)=>{
+  console.log(date," date")
+  console.log(amount," amount")
+  console.log(description," description")
+  console.log(category_id," category_id")
+  console.log(budget_id," budget_id")
   return api.post("/expenses",{date:date,amount:amount,description:description,category_id:category_id,budget_id:budget_id}).then(({data:{expenseAdded}})=>{
    return expenseAdded
     }
