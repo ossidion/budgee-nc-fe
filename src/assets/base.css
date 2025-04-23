@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  overflow: hidden;
 
   /* Base Colors */
   --vt-c-white: #ffffff;
@@ -69,6 +68,10 @@
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+body {
+  scrollbar-width: none; /* Firefox */
 }
 
 body {
