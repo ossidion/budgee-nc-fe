@@ -3,6 +3,7 @@ import {ref, computed} from "vue";
 import "tailwindcss";
 import {useStore} from "./assets/stores/currentBudgetData";
 import {changeHSL} from "@/utils/chartData";
+import { postExpense } from "@/api/requests";
 
 const budgetStore = useStore();
 
@@ -33,9 +34,12 @@ const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value;
 };
 
-const selectCategory = (key, item, color) => {
-  formData.value.existingCategory = {key, item, color};
-  console.log(item, "<<<<<<<<<<<<");
+const selectCategory = (index, item, color) => {
+formData.value.existingCategory = {
+    key: budgetStore.categories[index]._id,
+    item,
+    color
+  };
   dropdownOpen.value = false;
 };
 
@@ -65,37 +69,53 @@ const addCategory = (newCategory, categoryColor) => {
   budgetStore.addCategory(newCategory, categoryColor);
 };
 
-const addNewExpense = () => {
+const addNewExpense = async () => {
   const cost = Number(formData.value.costOfExpense);
   if (isNaN(cost) || cost <= 0) return;
 
+  let categoryId;
+  let categoryName;
+
   if (formData.value.newCategory.trim()) {
-    addCategory(
+    const newCategory = await budgetStore.addCategory(
       formData.value.newCategory.trim(),
       formData.value.categoryColor
     );
-    budgetStore.addExpense({
-      amount: cost,
-      categoryIndex: budgetStore.categories.length - 1,
-      description: formData.value.description,
-      date: formData.value.date,
-    });
-    optimisticMessage.value = `£${cost} successfully added to ${formData.value.newCategory.trim()}!`;
+    categoryId = newCategory._id;
+    categoryName = newCategory.name;
   } else if (formData.value.existingCategory) {
-    budgetStore.addExpense({
-      amount: cost,
-      categoryIndex: formData.value.existingCategory.key,
-      description: formData.value.description,
-      date: formData.value.date,
-    });
-    optimisticMessage.value = `£${cost} successfully added to ${formData.value.existingCategory.item}!`;
+    categoryId = formData.value.existingCategory.key;
+    categoryName = formData.value.existingCategory.item;
   } else {
     optimisticMessage.value = "Please select or create a category.";
     return;
   }
 
-  showExpenseForm();
-  formData.value = getInitialData();
+  try {
+    const expenseAdded = await postExpense(
+      formData.value.date,
+      cost,
+      formData.value.description,
+      categoryId, 
+      budgetStore.budget._id
+    );
+
+    budgetStore.addExpense(
+      cost,
+      categoryId,
+      budgetStore.budget._id,
+      formData.value.date,
+      formData.value.description,
+      expenseAdded._id
+    );
+
+    optimisticMessage.value = `£${cost} successfully added to ${categoryName}!`;
+    showExpenseForm();
+    formData.value = getInitialData();
+  } catch (error) {
+    console.error("Failed to save expense:", error.response?.data || error.message);
+    optimisticMessage.value = "Failed to save expense. Please try again.";
+  }
 };
 
 const showCategoryModal = ref(false);
