@@ -19,7 +19,6 @@ const {id,name, amount, percentage,confirmed, hex_code,currency, locale} = defin
   percentage: Number,
   hex_code:String,
 
-
 })
 const toDeleteCategoryName = ref('')
 const isDeleting = ref(true)
@@ -35,7 +34,7 @@ const bgColor = computed(()=>{
 })
 
 const detailsColor = computed(()=>{
-  return confirmed ? changeHSL(hex_code,{s:100,l:30}) : "#000000"
+  return confirmed ? changeHSL(hex_code,{s:100,l:10}) : "#000000"
 
 })
 const width = computed(()=>{
@@ -93,6 +92,12 @@ const formattedAmount = useCurrencyFormatter(amount,currency,locale)
 }
 
 
+
+  
+  const formattedAmount = computed(()=>useCurrencyFormatter(amount,currency,locale))
+
+
+
 </script>
 
 <template>
@@ -101,15 +106,17 @@ const formattedAmount = useCurrencyFormatter(amount,currency,locale)
     
       <p class="category-card-name">{{ name }}</p>
       
-      <p>{{ formattedAmount }}</p>
+      <p>{{formattedAmount}}</p>
       <div >
         <p class="category-card-percentage" >{{ percentage }}%</p>
       </div>
       
 
+
       <button v-if="isDeleting" class="deleteCategoryButton" :style="deleteButtonStyle" @click.stop.prevent="deleteCat(id)">
         ×
       </button>
+
   </RouterLink>
   
 </template>

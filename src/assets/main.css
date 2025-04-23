@@ -242,10 +242,47 @@ a,
   margin-right: auto;
   font-weight: bolder;
 }
-
-.expenseCard {
+.addExpenseCard{
+  padding-right: 5%;
+  padding-left: 5%;
   display: grid;
-  grid-template-columns: 2fr 1.5fr 0.7fr;
+  grid-template-columns: 2fr 2fr 2fr;
+  margin-top: 1%;
+  text-align: center;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  border-radius:10px 10px 10px 10px;
+  font-size:large;
+  width:80%;
+  margin-bottom:1%;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight:bolder
+}
+.addExpenseButton{
+
+  display: grid;
+  margin-top: 10%;
+  text-align: center;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  border-radius:10px 10px 10px;
+  font-size:large;
+  width:4rem;
+  margin-bottom:1%;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight:bolder
+}
+
+
+.expenseCard{
+  padding-right: 5%;
+  padding-left: 5%;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
   margin-top: 1%;
   text-align: center;
   padding-top: 0.8em;
