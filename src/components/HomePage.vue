@@ -74,10 +74,20 @@ const addNewExpense = () => {
       formData.value.newCategory.trim(),
       formData.value.categoryColor
     );
-    budgetStore.addExpense(cost, budgetStore.categories.length - 1);
+    budgetStore.addExpense({
+      amount: cost,
+      categoryIndex: budgetStore.categories.length - 1,
+      description: formData.value.description,
+      date: formData.value.date,
+    });
     optimisticMessage.value = `£${cost} successfully added to ${formData.value.newCategory.trim()}!`;
   } else if (formData.value.existingCategory) {
-    budgetStore.addExpense(cost, formData.value.existingCategory.key);
+    budgetStore.addExpense({
+      amount: cost,
+      categoryIndex: formData.value.existingCategory.key,
+      description: formData.value.description,
+      date: formData.value.date,
+    });
     optimisticMessage.value = `£${cost} successfully added to ${formData.value.existingCategory.item}!`;
   } else {
     optimisticMessage.value = "Please select or create a category.";
@@ -125,6 +135,18 @@ const closeCategoryModal = () => {
               step="0.01"
               placeholder=" " />
             <label for="cost" class="custom-label">Cost of Expense</label>
+          </div>
+
+          <div class="form-div relative">
+            <input
+              class="custom-input"
+              name="description"
+              v-model="formData.description"
+              type="text"
+              placeholder=" " />
+            <label for="description" class="custom-label"
+              >Description</label
+            >
           </div>
 
           <!-- Date -->
@@ -246,7 +268,14 @@ const closeCategoryModal = () => {
         </form>
       </div>
 
-      <p class="opt-mes">{{ optimisticMessage }}</p>
+      <div
+        v-if="optimisticMessage"
+        class="fixed inset-x-0 bottom-[20%] flex justify-center z-[1000]">
+        <p
+          class="text-[#73d622] text-xl md:text-2xl font-bold px-8 py-4 rounded-lg border border-transparent animate-[fadeOut_2s_ease-in-out_forwards] dark-theme:bg-black dark-theme:text-[#8aff33] dark-theme:shadow-lg dark-theme:border-[#73d622]/30">
+          {{ optimisticMessage }}
+        </p>
+      </div>
     </section>
   </div>
 </template>
@@ -267,6 +296,21 @@ input[type="number"]::-webkit-outer-spin-button {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 }
 </style>
 

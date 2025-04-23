@@ -44,10 +44,9 @@ getColours()
     for (let expense of expensesData) {
       const index = category_ids.indexOf(expense.category_id);
       if (index === -1) {
-        return Promise.reject({msg: "no cat found"});
+      } else {
+        categoryData[index].expenses.push(expense);
       }
-
-      categoryData[index].expenses.push(expense);
     }
 
     budgetStore.$patch({categories: categoryData});
@@ -93,3 +92,4 @@ getColours()
   opacity: 0;
 }
 </style>
+
