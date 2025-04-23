@@ -46,6 +46,8 @@ function confirmAddCategory(){
 
 function handleColourClick(colour){
 
+       // delete this later 
+
 colourStore.setSelectedColour(colour)
 console.log(colourStore.getSelectedColour._id, "<<<< this one")
 colourId = colourStore.getSelectedColour._id
@@ -123,7 +125,7 @@ const styleObject = reactive({
      </div>
 
 
-  
+
         
     </div>
 </template>
@@ -137,3 +139,4 @@ const styleObject = reactive({
   outline:none;
 }
 </style>
+
