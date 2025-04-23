@@ -100,9 +100,9 @@ export const postColour=(name,hex_code)=>{
    return newColour
     }
 )}
-// export const deleteColour = (id) => {
-//   return api.delete(`/colours/${id}`)
-// };
+export const deleteColour = (id) => {
+  return api.delete(`/colours/${id}`)
+};
 
 
 

@@ -1,9 +1,17 @@
 <script setup>
 import { changeHSL, shadeColor } from '@/utils/chartData'
-import { computed, reactive } from 'vue'
+import { computed, reactive ,ref} from 'vue'
 import { RouterLink } from 'vue-router'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter';
-import { toRef } from 'vue'
+import { deleteCategory }  from '@/api/requests'
+
+
+const toDeleteCategoryName = ref('')
+console.log(toDeleteCategoryName,"toDeleteCategoryName")
+const isDeleting = ref(true)
+
+
+
 
 // declare the props 
 
@@ -17,6 +25,26 @@ const {id,name, amount, percentage,confirmed, hex_code,currency, locale} = defin
 
 
 })
+function deleteCat(id){
+  // console.log(id)
+  // if(toDeleteCategoryName.value.trim()){
+  //   const catName = toDeleteCategoryName.value
+  //   toDeleteCategoryName.value = catName
+  //   isDeleting.value = true
+    
+    return deleteCategory(id).then((response)=>{
+      console.log(response)
+    }).catch((err)=>{
+      console.log(err,"err")
+    })
+ }
+ else{
+  toDeleteCategoryName.value = ''
+  isDeleting.value = false
+ }
+ 
+}
+
 
 const borderRad = computed(()=>{
   return confirmed ? "10px 10px 10px":"10px 10px 10px 10px"
@@ -70,8 +98,13 @@ const styleObjectDark = reactive({
       <div >
         <p class="category-card-percentage" >{{ percentage }}%</p>
       </div>
+      
 
+      <button v-if="isDeleting" class="deleteCategoryButton" :style="styleObject" @click="deleteCat(id)">
+     -
+      </button>
   </RouterLink>
+  
 </template>
 
 
