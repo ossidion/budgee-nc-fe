@@ -29,6 +29,7 @@ getColours()
   })
   .then((budgetData) => {
     budgetStore.$patch({budget: budgetData});
+    console.log(budgetData)
     return getCategories();
   })
   .then((res) => {
