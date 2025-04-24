@@ -6,6 +6,7 @@ const colourStore = useColourStore()
 function handleColourClick(colour){
 
   colourStore.setSelectedColour(colour)
+  // console.log(colourStore.getSelectedColour)
   return colourStore.getSelectedColour._id
 }
 

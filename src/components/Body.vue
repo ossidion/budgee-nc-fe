@@ -43,7 +43,6 @@ getColours()
     categoryData.forEach((cat) => (cat.confirmed = true));
 
     for (let expense of expensesData) {
-
         expense.confirmed = true;
         const index = category_ids.indexOf(expense.category_id)
         if (index === -1) {
@@ -52,7 +51,6 @@ getColours()
         else{
             categoryData[index].expenses.push(expense)
         }
-
     }
 
     budgetStore.$patch({categories: categoryData});
@@ -98,3 +96,4 @@ getColours()
   opacity: 0;
 }
 </style>
+

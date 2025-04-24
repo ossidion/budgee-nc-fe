@@ -10,7 +10,6 @@ import { useStore } from '@/components/assets/stores/currentBudgetData'
 const store = useStore();
 
 
-
 const {id,name, amount, percentage,confirmed, hex_code,currency, locale} = defineProps({
   id:String,
   name: String,

@@ -8,8 +8,6 @@ const props = defineProps({
     }
 })
 
-
-
 const settingsStore = useSettings()
 
 

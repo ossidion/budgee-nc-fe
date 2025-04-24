@@ -1,8 +1,6 @@
 @import "./base.css";
 @import "tailwindcss";
 
-
-
 @import "./base.css";
 @import "tailwindcss";
 
@@ -13,7 +11,8 @@
   padding: 1rem;
 }
 
-body, #app {
+body,
+#app {
   font-family: "Nunito", sans-serif;
   margin: 0;
   padding: 0;
@@ -66,7 +65,6 @@ a,
   text-align: center;
 }
 
-
 .budget {
   z-index: 100;
   position: absolute;
@@ -87,7 +85,7 @@ a,
 }
 
 .home-page-button {
-  background-color: #a3e635;
+  background-color: #73d622;
   color: #1a1a1a;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
@@ -168,7 +166,7 @@ a,
 }
 
 .theme-dark .custom-input:focus {
-  border-bottom-color: #86d021;
+  border-bottom-color: #73d622;
 }
 
 .custom-label {
@@ -187,7 +185,7 @@ a,
 .custom-input:not(:placeholder-shown) ~ .custom-label {
   font-weight: 500;
   transform: scale(0.75) translateY(-1.5rem);
-  color: #86d021;
+  color: #73d622;
 }
 
 .theme-dark .custom-label {
@@ -196,7 +194,7 @@ a,
 
 .theme-dark .custom-input:focus ~ .custom-label,
 .theme-dark .custom-input:not(:placeholder-shown) ~ .custom-label {
-  color: #86d021;
+  color: #73d622;
 }
 
 .header {
@@ -310,3 +308,16 @@ a,
   position: relative;
   top: 0px;
 }
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0%) invert(0%);
+}
+
+.theme-dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Inverts the dark calendar icon to white */
+}
+
