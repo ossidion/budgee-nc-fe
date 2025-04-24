@@ -2,11 +2,41 @@
 import { useColourStore } from './assets/stores/colourStore';
 
 const colourStore = useColourStore()
+
+function handleColourClick(colour){
+
+  colourStore.setSelectedColour(colour)
+  // console.log(colourStore.getSelectedColour)
+  return colourStore.getSelectedColour._id
+}
+
 </script>
+
 
 <template>
     <div>
-      <h2>Current Selected Colour:</h2>
+      <p>Choose Colour</p>
+      <div class="flex flex-wrap gap-2">
+    <div
+      v-for="colour in colourStore.getPalette"
+      :key="colour._id"
+      :title="colour.name"
+      class="w-8 h-8 border border-black rounded cursor-pointer"
+      :style="{ backgroundColor: colour.hex_code }"
+      @click="handleColourClick(colour)"
+    >
+      <div v-if="colourStore.selectedColour?.hex_code === colour.hex_code" class="w-full h-full border-4 border-white rounded-full"></div>
+      <!-- {{  console.log(colourStore.setSelectedColour(colour), '<< User Colour!') }} -->
+    </div>
+    
+  </div>
+
+
+
+      <!-- <p>{{ colourStore.getPalette[0].name }}</p> -->
+  <!-- <p><input type="submit" value="Submit"></p> -->
+
+      <!-- <h2>Current Selected Colour:</h2>
   
       <div v-if="colourStore.getSelectedColour">
         <p>{{ colourStore.getSelectedColour }}</p>
@@ -32,6 +62,6 @@ const colourStore = useColourStore()
         >
           {{ colour }}
         </li>
-      </ul>
+      </ul> -->
     </div>
   </template>

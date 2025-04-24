@@ -33,12 +33,7 @@ import {Chart, DoughnutController} from "chart.js";
 
 import {createTypedChart} from "vue-chartjs";
 
-
-
-
-
-class Custom extends DoughnutController{
-
+class Custom extends DoughnutController {
   updateElement(arc, i, properties, mode) {
     // console.log(this.getDataset())
 
@@ -84,10 +79,9 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
           'remaining-budget',
           budgetStore.getSpendingLeft >= 0 ? 'positive' : 'negative',
         ]">
-        left £{{ budgetStore.getSpendingLeft.toFixed(2) }}
+        £{{ budgetStore.getSpendingLeft.toFixed(2) }} left
       </p>
     </div>
-
   </div>
 </template>
 
@@ -110,7 +104,6 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
   left: 50.5%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 10;
   font-weight: bold;
   font-size: 0.8rem;
   pointer-events: none;
@@ -120,8 +113,7 @@ const CustomChart = createTypedChart("customDoughnut", Custom);
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.25rem;
-  pointer-events: none; 
-
+  pointer-events: none;
 }
 
 .remaining-budget.positive {
