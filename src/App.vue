@@ -14,7 +14,7 @@ const password = ref('');
 
 const handleLogin = () => {
   showLoginModal.value = false;
-  router.push('/home');
+  router.push('/');
 };
 
 onMounted(() => {
@@ -94,6 +94,7 @@ onMounted(() => {
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
+  overflow: hidden;
 }
 
 .mainContentDiv {
