@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://budgee-be-amq3.onrender.com/api/",
+  baseURL: "https://budgee-be-rp4l.onrender.com/api",
 });
 
 export const getExpenses = () => {
