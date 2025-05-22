@@ -32,7 +32,7 @@ onMounted(() => {
 <template>
   <div id="appBody">
     <!-- Login Modal -->
-    <div v-if="showLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+    <!-- <div v-if="showLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
       <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
         <div class="p-8">
           <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-8">Welcome Back</h2>
@@ -75,7 +75,7 @@ onMounted(() => {
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
     
     <div>
       <Header />
