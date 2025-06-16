@@ -39,8 +39,8 @@ const { avatar, username, isLoggedIn } = storeToRefs(userStore)
 
 <style scoped>
 .header {
-  padding: 1rem 1.5rem 2rem;
-  margin-bottom: 2rem;
+  padding: 1rem 1.5rem 0rem;
+  margin-bottom: 0rem;
   transition: background-color 0.3s ease;
 }
 
